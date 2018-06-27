@@ -43,6 +43,16 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+// Event page
+app.get("/event/:id", (req, res) => {
+
+  let templateVars = {
+        uniqueUrl: req.params.id,
+        // longURL: Document.URL
+      };
+  res.render("event", templateVars);
+});
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
