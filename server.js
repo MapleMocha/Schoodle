@@ -40,12 +40,14 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 
-app.get("/event/create", (req, res) => {
-  res.render("create");
-})
-
 app.get("/", (req, res) => {
   res.render("index");
+});
+
+// Create page
+
+app.get("/event/create", (req, res) => {
+  res.render("create");
 });
 
 app.listen(PORT, () => {

@@ -7,7 +7,8 @@ html {
   &:before, &:after {
     box-sizing: inherit;
   }
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #e4ecf2;
 }
 
 nav {
@@ -19,10 +20,18 @@ nav {
   margin: auto;
   .create-event{
     border: 1px solid #000000;
+    background-color: #b2cbdb;
     h1{
+      background-color: #b2cbdb;
       padding-left: 50px;
+      color: #323947;
+    }
+    form {
+      background-color: #b2cbdb;
     }
     textarea {
+      background-color: #eee;
+      font-style: italic;
       height: 28px;
       width: 400px;
       margin-left: 50px;
@@ -31,6 +40,7 @@ nav {
       margin-bottom: 5px;
     }
     .button {
+      background-color: #f6e474;
       display: flex;
       margin-left: auto;
       margin-right: 50px;
