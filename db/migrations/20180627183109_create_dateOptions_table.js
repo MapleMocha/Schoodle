@@ -5,8 +5,8 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('date_options', function(table){
       table.increments('id').primary().unsigned();
       table.date('date');
-      table.time('timeStart');
-      table.time('timeEnd');
+      table.dateTime('timeStart');
+      table.dateTime('timeEnd');
       table.integer('eventId');
       table.foreign('eventId').references('event.id');
     })
