@@ -1,7 +1,21 @@
-body {
-  background-color: #EEE;
+html {
+  box-sizing: border-box;
+}
 
-  h1 {
-    color: #244751;
+* {
+  box-sizing: inherit;
+  &:before, &:after {
+    box-sizing: inherit;
   }
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+nav {
+  padding: 20px;
+}
+
+.container {
+  width: 500px;
+  margin: auto;
+  text-align: center;
 }

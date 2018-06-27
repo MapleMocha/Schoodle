@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Schoodle - Create Event</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/create.css" type="text/css" />
+
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/create.js"></script>
+  </head>
+
+  <body>
+
+    <nav id="nav-bar">
+      <span class="header">Schoodle</span>
+    </nav>
+
+    <main class="container">
+      <section class="create-event">
+        <h1>Create Event</h1>
+        <form action="/event/:id" method="POST">
+          <textarea name="name" placeholder="name"></textarea>
+          <textarea name="email" placeholder="email"></textarea>
+          <textarea name="title" placeholder="event title"></textarea>
+          <textarea name="description" placeholder="event description"></textarea>
+          <button class="button">create</button>
+        </form>
+      </section>
+    </main>
+
+  </body>
+
+
+
+
+
+</html>

@@ -1,0 +1,42 @@
+html {
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+  &:before, &:after {
+    box-sizing: inherit;
+  }
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+nav {
+  padding: 20px;
+}
+
+.container {
+  width: 500px;
+  margin: auto;
+  .create-event{
+    border: 1px solid #000000;
+    h1{
+      padding-left: 50px;
+    }
+    textarea {
+      height: 28px;
+      width: 400px;
+      margin-left: 50px;
+      margin-right: 50px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+    .button {
+      display: flex;
+      margin-left: auto;
+      margin-right: 50px;
+      margin-top: 5px;
+      margin-bottom: 20px;
+    }
+  }
+}
+

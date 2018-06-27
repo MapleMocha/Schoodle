@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home Page</title>
+    <title>Schoodle - Home Page</title>
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -12,6 +12,18 @@
   </head>
 
   <body>
-    <h1>Hello World!</h1>
+
+    <nav id="nav-bar">
+      <span class="header">Schoodle</span>
+    </nav>
+
+    <main class="container">
+      <h1>Welcome to Schoodle!</h1>
+      <p>The scheduling app of your dreams...</p>
+      <form action="/event/create" method="GET">
+        <button class="button">Create Event</button>
+      </form>
+    </main>
+
   </body>
 </html>
