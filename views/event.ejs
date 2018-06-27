@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/event.css" type="text/css" />
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
@@ -21,26 +22,36 @@
       <h2 id='invite-link'>http://localhost:8080/event/<%-uniqueUrl%><h2>
       <!-- image to click to autocopy -->
     </div>
-
+<br />
+<br />
+<br />
+<br />
     <div>
-      <table>
+      <table class='table'>
+        <thead>
+
         <tr>
-        <!-- for each date_options in event -need to find the  length
+          <%# for each date_options in event -need to find the  length
 
               SELECT COUNT(*)
                 FROM event
                 JOIN date_options
                 ON event.id = date_options.eventid
                 WHERE event.id = (current...)
-                {
-              -->
+                { %>
+
           <th>Date</th>
           <th>Date</th>
           <th>Date</th>
           <th>Date</th>
           <th>Date</th>
-          <!-- } -->
+           <%# }  %>
         </tr>
+      </thead>
+      <tbody>
+        <%# will be populated with users choices...
+              check if chosen - green
+              X if not - red %>
         <tr>
           <td>,/</td>
           <td>,/</td>
@@ -56,6 +67,7 @@
           <td>,/</td>
         </tr>
 
+      </tbody>
       </table>
     </div>
 
