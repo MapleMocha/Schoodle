@@ -3,14 +3,25 @@
   <head>
     <title>Schoodle - Create Event</title>
 
+    <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,600,600i" rel="stylesheet">
+
+    <!-- Date Picker -->
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/redmond/jquery-ui.css" rel = "stylesheet">
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/create.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/create.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <script type="text/javascript" src="/scripts/datepicker.js"></script>
+
+
+
   </head>
 
   <body>
@@ -22,13 +33,15 @@
     <main class="container">
       <section class="create-event">
         <h1>Create Event</h1>
-        <form action="/event/:id" method="POST">
+        <form action="/events" method="POST">
           <textarea name="name" placeholder="name"></textarea>
           <textarea name="email" placeholder="email"></textarea>
           <textarea name="title" placeholder="event title"></textarea>
           <textarea name="description" placeholder="event description"></textarea>
-          <button class="button">create</button>
+          <input class ="date" type=text />
+          <button type="submit" class="button">create</button>
         </form>
+
       </section>
     </main>
 

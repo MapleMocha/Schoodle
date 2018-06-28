@@ -46,9 +46,27 @@ app.get("/", (req, res) => {
 
 // Create page
 
-app.get("/event/create", (req, res) => {
+app.get("/events/new", (req, res) => {
   res.render("create");
 });
+
+// Post to Event page
+
+app.post("/events", (req, res) => {
+  let {name, email, title, description} = req.body;
+  Promise.all([
+    knex('admin')
+      .insert({name: name, email: email})
+      .then(function() {
+        console.log("admin inserted");
+      })
+      .catch(function(err) {
+        console.log(err);
+      })
+    ])
+
+  // res.redirect("/event/:id")
+})
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

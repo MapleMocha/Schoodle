@@ -16,7 +16,7 @@ nav {
 }
 
 .container {
-  width: 500px;
+  width: 700px;
   margin: auto;
   .create-event{
     border: 1px solid #323947;
@@ -32,13 +32,17 @@ nav {
     }
     textarea {
       background-color: #eee;
-      font-style: italic;
       height: 28px;
       width: 400px;
       margin-left: 50px;
       margin-right: 50px;
       margin-top: 5px;
       margin-bottom: 5px;
+    }
+    div {
+      margin-left: 50px;
+      width: 400px;
+      background-color: #b2cbdb;
     }
     .button {
       background-color: #f6e474;
