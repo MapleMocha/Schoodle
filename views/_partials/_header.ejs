@@ -19,6 +19,8 @@
 <!-- Animation script -->
 <script type="text/javascript" src="/scripts/animate.js"></script>
 
+
+
 <!-- Navbar -->
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -32,9 +34,37 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/event/create" class="btn btn-default">Create New Event</a></li>
+        <li><a class="btn btn-default signupButton">Sign Up</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a class="btn btn-default loginButton">Login</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 
+
+<div class="bg-modal-login">
+  <div class="modal-content-login">
+    <div class="close">+</div>
+    <h1>Login</h1>
+    <form>
+      <input class="login" type="text" placeholder="Email">
+      <input class="login" type="text" placeholder="Password">
+      <a class="btn btn-default login" href="">Submit</a>
+    </form>
+  </div>
+</div>
+
+<div class="bg-modal-signup">
+  <div class="modal-content-signup">
+    <div class="close">+</div>
+    <h1>Sign Up</h1>
+    <form>
+      <input class="login" id="signupName" type="text" placeholder="Name">
+      <input class="login" id="signupEmail" type="text" placeholder="Email">
+      <input class="login" id="signupPassword" type="text" placeholder="Password">
+      <a class="btn btn-default signup" href="">Submit</a>
+    </form>
+  </div>
+</div>
