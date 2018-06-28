@@ -13,7 +13,9 @@
     <script type="text/javascript" src="/scripts/app.js"></script>
   </head>
 
+
   <body>
+    <header> <% include ./_partials/_header %> </header>
 
     <nav id="nav-bar">
       <span class="header">Schoodle</span>
@@ -22,10 +24,11 @@
     <main class="container">
       <h1>Welcome to Schoodle!</h1>
       <p>The scheduling app of your dreams...</p>
-      <form action="/event/create" method="GET">
+      <form action="/events/new" method="GET">
         <button class="button">create event</button>
       </form>
     </main>
+
 
   </body>
 </html>

@@ -53,16 +53,26 @@ app.get("/events/new", (req, res) => {
 // Post to Event page
 
 app.post("/events", (req, res) => {
-  let {name, email, title, description} = req.body;
+  let {name, email, title, description, day} = req.body;
   Promise.all([
     knex('admin')
       .insert({name: name, email: email})
-      .then(function() {
-        console.log("admin inserted");
+      .returning('id')
+      .then(function(id) {
+        knex('event')
+        .insert({name: title, adminId: id[0]})
+        .returning('id')
+        .then(function(id) {
+          knex('date_options')
+          .insert({date: day, eventId: id[0]})
+          .then(function() {
+            console.log("inserted")
+          })
+        })
       })
       .catch(function(err) {
         console.log(err);
-      })
+      }),
     ])
 
   // res.redirect("/event/:id")
