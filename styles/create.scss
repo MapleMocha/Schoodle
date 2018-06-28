@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  background-color: #e4ecf2;
+
   box-sizing: inherit;
   &:before, &:after {
     box-sizing: inherit;
@@ -36,6 +36,9 @@ body {
       margin-right: 50px;
       margin-top: 5px;
       margin-bottom: 5px;
+    }
+    .date {
+      display: none;
     }
 
     .timepicker {
