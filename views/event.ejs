@@ -32,9 +32,6 @@
     </div>
 <br />
 <br />
-<p>
-  <%-columnCount%>
-</p>
 <br />
 <br />
             <div>
@@ -51,12 +48,11 @@
                         WHERE event.id = (current...)
                         { %>
                   <th class='user-column'> Voter: </th>
+
                   <% for(let i = 0; i < columnCount; i++) { %>
-                        <th>Date</th>
-                        <p>
-                          <%-dates%>
-                        </p>
+                        <th class='date'><%-`${dayName[i]} ${dayNum[i]} ${month[i]} ${year[i]}`%></th>
                    <% }  %>
+                   
                 </tr>
               </thead>
               <tbody>

@@ -68,28 +68,57 @@ app.get("/events/:id", (req, res) => {
  let templateVars = {
        uniqueUrl: req.params.id,
        // longURL: Document.URL
+       dayNum: [],
+       dayName: [],
+       month: [],
+       year: [],
 
      };
  // const print = funtionction
 
-  knex.count('*')
+  knex.where({
+      eventId: 1,
+      })
+      .count('*')
       .from('date_options')
       .then(function(result) {
-        info = result;
-        templateVars['columnCount'] = info[0].count;
-        knex.select('*')
+
+        templateVars['columnCount'] = result[0].count;
+
+        knex.where({
+              eventId: 1,
+            })
+            .select('*')
             .from('date_options')
             .then(function(result) {
-                 console.log(result[0])
-                 info = result;
-                 let date = String(info[0].date)
-                 templateVars['dayName'] = date.slice(0,2);
-                 templateVars['dayNum'] = date.slice(8,9);
-                 templateVars['month'] = date.slice(4,6);
-                 res.render("event", templateVars);
-               }).finally(function() {
-                     // knex.destroy();
+                 for(let i in result){
+                   let date = String(result[i].date)
+                   templateVars['dayName'].push(date.slice(0,3));
+                   templateVars['dayNum'].push(date.slice(8,10));
+                   templateVars['month'].push(date.slice(4,7));
+                   templateVars['year'].push(date.slice(11,15));
+                 }
+                 //let eventId = result[0].
+
+                 knex.where({
+                        eventId: 1,
+                     })
+                     .select('*')
+                     .from('users')
+                     .then(function(result) {
+                       console.log(result)
+
+
+
+                     })
+
+                     res.render("event", templateVars);
                    });
+
+
+               // }).finally(function() {
+               //       //knex.destroy();
+               //     });
 
       }).finally(function() {
 
@@ -107,7 +136,7 @@ app.get("/events/:id", (req, res) => {
   //
   //     };
   // res.render("event", templateVars);
-});
+    });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

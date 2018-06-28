@@ -66,6 +66,10 @@ body {
             border-bottom: 2px solid $table-grey;
             background-color: $backgroud-color-darker;
           }
+
+          .date {
+            word-wrap: break-word;
+          }
         }
 
         tbody + tbody {
