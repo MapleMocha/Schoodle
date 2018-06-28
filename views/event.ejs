@@ -52,15 +52,12 @@
                   <% for(let i = 0; i < columnCount; i++) { %>
                         <th class='date'><%-`${dayName[i]} ${dayNum[i]} ${month[i]} ${year[i]}`%></th>
                    <% }  %>
-                   
+
                 </tr>
               </thead>
               <tbody>
-                <%# will be populated with users choices...
-                      check if chosen - green
-                      X if not - red %>
                 <tr>
-                  <td class='user-column'> user1 </td>
+                  <td class='user-column'> <%-`${users[0][0]}`%> </td>
                   <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
                   <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
                   <td class='ex'><i class="far fa-times-circle fa-2x"></i></td>
@@ -68,7 +65,7 @@
                   <td class='ex'><i class="far fa-times-circle fa-2x"></i></td>
                 </tr>
                 <tr>
-                  <td class='user-column'> user1 </td>
+                  <td class='user-column'> <%-`${users[1][0]}`%></td>
                   <td class='ex'><i class="far fa-times-circle fa-2x"></i></td>
                   <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
                   <td class='ex'><i class="far fa-times-circle fa-2x"></i></td>

@@ -46,24 +46,6 @@ app.get("/", (req, res) => {
 // Event page
 app.get("/events/:id", (req, res) => {
 
-  // for each date_options in event -need to find the  length
-  //
-  //    SELECT COUNT(*)
-  //      FROM event
-  //      JOIN date_options
-  //      ON event.id = date_options.eventid
-  //      WHERE event.id = (current...)
-  //      {
-
-  // We can use all standard SQL keywords such as joins and limit
-// knex('movies')
-//   .join('actors', 'actors.movie_id', '=', 'movies.id')
-//   .select('actors.name as star', 'movies.name as movie', 'movies.year as year')
-//   .limit(10)
-//   .then(rows => console.log(rows))
-//   .catch(err => console.log(err.message))
-
-
  let info = [];
  let templateVars = {
        uniqueUrl: req.params.id,
@@ -72,10 +54,14 @@ app.get("/events/:id", (req, res) => {
        dayName: [],
        month: [],
        year: [],
+       users:[],
+       currentUser: '',
 
      };
- // const print = funtionction
 
+Promise.all([
+
+  //find how many date options there were for the selected event
   knex.where({
       eventId: 1,
       })
@@ -84,47 +70,47 @@ app.get("/events/:id", (req, res) => {
       .then(function(result) {
 
         templateVars['columnCount'] = result[0].count;
+      }),
 
-        knex.where({
-              eventId: 1,
-            })
-            .select('*')
-            .from('date_options')
-            .then(function(result) {
-                 for(let i in result){
-                   let date = String(result[i].date)
-                   templateVars['dayName'].push(date.slice(0,3));
-                   templateVars['dayNum'].push(date.slice(8,10));
-                   templateVars['month'].push(date.slice(4,7));
-                   templateVars['year'].push(date.slice(11,15));
-                 }
-                 //let eventId = result[0].
-
-                 knex.where({
-                        eventId: 1,
-                     })
-                     .select('*')
-                     .from('users')
-                     .then(function(result) {
-                       console.log(result)
+  //get the specific dates for each option
+  knex.where({
+        eventId: 1,
+      })
+      .select('*')
+      .from('date_options')
+      .then(function(result) {
+         for(let i in result){
+           let date = String(result[i].date)
+           templateVars['dayName'].push(date.slice(0,3));
+           templateVars['dayNum'].push(date.slice(8,10));
+           templateVars['month'].push(date.slice(4,7));
+           templateVars['year'].push(date.slice(11,15));
+         }
+      }),
 
 
+   //get the users that have responded to the selected event
+   knex.where({
+          eventId: 1,
+       })
+       .select('*')
+       .from('users')
+       .then(function(result) {
+         // console.log(result)
+         for(let i in result){
+           let userName = result[i].name;
+           let userEmail = result[i].email;
+           templateVars['users'].push([userName, userEmail]);
+         }
+         console.log('USERS', templateVars['users'][0][0]);
+       }),
 
-                     })
 
-                     res.render("event", templateVars);
-                   });
+]).then(function(result) {
 
+  res.render("event", templateVars);
 
-               // }).finally(function() {
-               //       //knex.destroy();
-               //     });
-
-      }).finally(function() {
-
-          knex.destroy();
-
-        })
+})
 
 
 
