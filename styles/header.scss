@@ -7,15 +7,28 @@ $dropDown       : false;
   background-color: $bgDefault;
   border-color: $bgHighlight;
   font-family: 'Montserrat', sans-serif;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
   .navbar-brand {
-    color: $colDefault;
+    font-size: 35px;
+    margin-top: 0.5em;
+    color:#323947;
     &:hover, &:focus {
       color: $colHighlight; }}
   .navbar-text {
     color: $colDefault; }
+  .chickin {
+    height: 80px;
+    width: 250px;
+    position: relative;
+    left: 540px;
+
+  }
   #logo-icon {
-    width:45px;
-    height:45px;
+    opacity: 0.80;
+    margin: auto;
+    width:60px;
+    height:60px;
     color:#323947;
   }
   .navbar-nav {
@@ -47,7 +60,17 @@ $dropDown       : false;
     > .open {
       > a, > a:hover, > a:focus {
         color: $colHighlight;
-        background-color: $bgHighlight; }}}
+        background-color: $bgHighlight; }}
+        .btn-default {
+          margin: 1em;
+          color:#323947;
+          background-color:#b2cbdb;
+          &:hover, &:focus {
+            opacity: 0.75;
+            color:#f6e474;
+            background-color:#323947;
+          }
+        }}
   .navbar-toggle {
     border-color: $bgHighlight;
     &:hover, &:focus {
