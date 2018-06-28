@@ -46,11 +46,67 @@ app.get("/", (req, res) => {
 // Event page
 app.get("/events/:id", (req, res) => {
 
-  let templateVars = {
-        uniqueUrl: req.params.id,
-        // longURL: Document.URL
-      };
-  res.render("event", templateVars);
+  // for each date_options in event -need to find the  length
+  //
+  //    SELECT COUNT(*)
+  //      FROM event
+  //      JOIN date_options
+  //      ON event.id = date_options.eventid
+  //      WHERE event.id = (current...)
+  //      {
+
+  // We can use all standard SQL keywords such as joins and limit
+// knex('movies')
+//   .join('actors', 'actors.movie_id', '=', 'movies.id')
+//   .select('actors.name as star', 'movies.name as movie', 'movies.year as year')
+//   .limit(10)
+//   .then(rows => console.log(rows))
+//   .catch(err => console.log(err.message))
+
+
+ let info = [];
+ let templateVars = {
+       uniqueUrl: req.params.id,
+       // longURL: Document.URL
+
+     };
+ // const print = funtionction
+
+  knex.count('*')
+      .from('date_options')
+      .then(function(result) {
+        info = result;
+        templateVars['columnCount'] = info[0].count;
+        knex.select('*')
+            .from('date_options')
+            .then(function(result) {
+                 console.log(result[0])
+                 info = result;
+                 let date = String(info[0].date)
+                 templateVars['dayName'] = date.slice(0,2);
+                 templateVars['dayNum'] = date.slice(8,9);
+                 templateVars['month'] = date.slice(4,6);
+                 res.render("event", templateVars);
+               }).finally(function() {
+                     // knex.destroy();
+                   });
+
+      }).finally(function() {
+
+          knex.destroy();
+
+        })
+
+
+
+
+  // let templateVars = {
+  //       uniqueUrl: req.params.id,
+  //       // longURL: Document.URL
+  //       columnCount: columnCount,
+  //
+  //     };
+  // res.render("event", templateVars);
 });
 
 app.listen(PORT, () => {

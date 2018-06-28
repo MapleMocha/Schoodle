@@ -15,9 +15,6 @@ $(document).ready(function() {
                 .addClass('btn-choice')
                 .removeClass('check')
                 .append('choose');
-      // $tableSpot.addClass('ex btn-choice');
-      // const $ex = $(`<i class="far fa-times-circle fa-2x"></i>`)
-      // $ex.appendTo($tableSpot);
     } else {
       $tableSpot.empty()
                 .addClass('check btn-choice')
