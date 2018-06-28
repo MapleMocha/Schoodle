@@ -39,9 +39,24 @@ nav {
       margin-top: 5px;
       margin-bottom: 5px;
     }
-    div {
+
+    .timepicker {
       margin-left: 50px;
       width: 400px;
+      background-color: #b2cbdb;
+      margin-top: 5px;
+      .start {
+        width: 75px;
+      }
+      .end {
+        width: 75px;
+      }
+    }
+    div {
+      display: flex;
+      margin-right: auto;
+      margin-left: 50px;
+      margin-bottom: 10px;
       background-color: #b2cbdb;
     }
     .button {

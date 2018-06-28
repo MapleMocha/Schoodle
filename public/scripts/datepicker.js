@@ -11,6 +11,18 @@ $(document).ready(function() {
     $( ".selector" ).datepicker({
       showOn: "button",
     });
+
   });
+
+
+    $('.start').timepicker({
+      'timeFormat': 'HH:mm:ss'
+    });
+    $('.end').timepicker({
+      'timeFormat': 'HH:mm:ss'
+    });
+
+
+
 
 });
