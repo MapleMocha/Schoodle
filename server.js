@@ -44,7 +44,7 @@ app.get("/", (req, res) => {
 });
 
 // Event page
-app.get("/event/:id", (req, res) => {
+app.get("/events/:id", (req, res) => {
 
   let templateVars = {
         uniqueUrl: req.params.id,
