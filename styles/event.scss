@@ -1,63 +1,89 @@
-/* - #e4ecf2
-- #b2cbdb
-- #f6e474
-- #5bb0e3
-- #323947 */
+$backgroud-color-light: #e4ecf2;
+$backgroud-color-darker: #b2cbdb;
+$accent-yellow:#f6e474;
+$accent-bright-blue: #5bb0e3;
+$text-color: #171a21;
+$accent-dark-blue: #323947;
+$table-grey: #dee2e6;
+$check-color: #dabe10;
+$check-color-backgroud: #f6e474;
+$ex-color: #eb6637;
+$ex-color-backgroud: #f7bba6;
+$custom-font: 'Montserrat', sans-serif;
 
 
 body {
   margin-top: 50px;
   text-align: center;
-  background-color: #e4ecf2;
+  background-color: $backgroud-color-light;
+  color: $text-color;
+  font-family: $custom-font;
 
-
-
-.table {
-    margin: auto;
-    width: 80%;
-    max-width: 100%;
-    margin-bottom: 1rem;
-    background-color: transparent;
-
-   tr {
-     th, td {
-       padding: 0.75rem;
-       vertical-align: top;
-       border-top: 1px solid #dee2e6;
-       text-align: center;
-     }
-   }
-
-
-    thead {
-        th {
-        vertical-align: bottom;
-        border-bottom: 2px solid #dee2e6;
-        background-color: #b2cbdb;
-      }
-    }
-
-    tbody + tbody {
-      border-top: 2px solid #dee2e6;
-    }
-
-    .check{
-      color: #dabe10;
-      background-color: #f6e474;
-    }
-
-    .ex{
-      color: #eb6637;
-      background-color: #f7bba6;
-    }
-
-    h2 i {
-      padding-left: 10px;
-      color: teal;
-    }
+  h2 i {
+    padding-left: 10px;
+    color: $accent-bright-blue;
   }
-}
 
-/* <i class="fas fa-check-circle"></i></td>
-<td><i class="fas fa-check-circle">
-<i class="far fa-copy"></i> */
+
+  .table {
+      margin: auto;
+      width: 80%;
+      max-width: 100%;
+      margin-bottom: 1rem;
+      background-color: transparent;
+      border: 1px solid $accent-dark-blue;
+      border-radius: 10px;
+
+       tr {
+         th, td {
+           padding: 0.75rem;
+           vertical-align: top;
+           border-top: 1px solid $table-grey;
+           text-align: center;
+           border: 1px solid $accent-dark-blue;
+
+         }
+         .user-column {
+           background-color: $backgroud-color-darker;
+         }
+
+       }
+
+       .new-user td {
+         border-left: 1px solid $accent-dark-blue;
+         border-right: 1px solid $accent-dark-blue;
+         border-top: none;
+         border-bottom: none;
+
+         .btn-choice {
+           border-radius: 10px;
+         }
+       }
+
+        thead {
+            th {
+            vertical-align: bottom;
+            border-bottom: 2px solid $table-grey;
+            background-color: $backgroud-color-darker;
+          }
+        }
+
+        tbody + tbody {
+          border-top: 2px solid $table-grey;
+        }
+
+        .check{
+          color: $check-color;
+          background-color: $check-color-backgroud;
+        }
+
+        .ex{
+          color: $ex-color;
+          background-color: $ex-color-backgroud;
+        }
+      }
+
+
+
+
+}
