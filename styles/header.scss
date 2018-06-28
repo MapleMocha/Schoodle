@@ -11,6 +11,7 @@ $dropDown       : false;
 .footerText {
   text-align: center;
   margin-top: 0.5em;
+  background-color: $bgDefault;
 }
 .navbar-default {
   background-color: $bgDefault;
@@ -18,6 +19,9 @@ $dropDown       : false;
   font-family: 'Montserrat', sans-serif;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
+  div {
+    background-color: $bgDefault;
+  }
   .navbar-brand {
     font-size: 35px;
     margin-top: 0.5em;
@@ -33,9 +37,11 @@ $dropDown       : false;
     width:60px;
     height:60px;
     color:#323947;
+    background-color: $bgDefault;
   }
   .navbar-nav {
     > li {
+      background-color: $bgDefault;
       > a {
         color: $colDefault;
         &:hover,  &:focus {

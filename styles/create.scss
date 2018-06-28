@@ -2,18 +2,16 @@ html {
   box-sizing: border-box;
 }
 
-* {
+body {
+  background-color: #e4ecf2;
   box-sizing: inherit;
   &:before, &:after {
     box-sizing: inherit;
   }
   font-family: 'Montserrat', sans-serif;
-  background-color: #e4ecf2;
+
 }
 
-nav {
-  padding: 20px;
-}
 
 .container {
   width: 700px;
@@ -71,4 +69,5 @@ nav {
     }
   }
 }
+
 
