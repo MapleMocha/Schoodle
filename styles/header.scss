@@ -3,6 +3,15 @@ $bgHighlight    : #323947;
 $colDefault     : #fdffff;
 $colHighlight   : #f6e474;
 $dropDown       : false;
+#footer {
+  position: fixed;
+  bottom:0px;
+  width: 100%;
+}
+.footerText {
+  text-align: center;
+  margin-top: 0.5em;
+}
 .navbar-default {
   background-color: $bgDefault;
   border-color: $bgHighlight;
@@ -17,16 +26,10 @@ $dropDown       : false;
       color: $colHighlight; }}
   .navbar-text {
     color: $colDefault; }
-  .chickin {
-    height: 80px;
-    width: 250px;
-    position: relative;
-    left: 540px;
 
-  }
   #logo-icon {
     opacity: 0.80;
-    margin: auto;
+    margin-top: 0.5em;
     width:60px;
     height:60px;
     color:#323947;
