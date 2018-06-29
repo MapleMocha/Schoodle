@@ -34,11 +34,11 @@ $(document).ready(function() {
       $(".date").datepicker({
           showOn: "button",
           buttonText: "day",
+          minDate: "dateToday",
           onSelect: function (dateText, inst) {
               addOrRemoveDate(dateText);
-              $(".days").append(dates);
-              addStart()
-              addEnd()
+              appendNewRow();
+
               dates = [];
           },
           beforeShowDay: function (date) {
@@ -62,8 +62,20 @@ $(document).ready(function() {
 
   });
 
+
+  function appendNewRow() {
+    $('.days').append(`<div class='new-div'>${dates}<input type='text' class='start' name='start' style='width: 80px; margin-bottom: 10px'><input type='text' class='end' name='end' style='width: 80px; margin-bottom: 10px'><button class='delete'>delete</button></div>`);
+    // addStart();
+    // addEnd();
+    $('.delete').on('click', function (event){
+      $(event.target).parent().remove();
+      console.log(event);
+    })
+  }
+
+
+
   function addStart() {
-    $('.days').append("<input type='text' class='start' name='start' style='width: 80px; margin-bottom: 10px'>");
     $('.start').timepicker({
       'timeFormat': 'HH:mm',
       'minTime': '08:00',
@@ -72,7 +84,6 @@ $(document).ready(function() {
   }
 
   function addEnd() {
-    $('.days').append("<input type='text' class='end' name='end' style='width: 80px; margin-bottom: 10px'>");
     $('.end').timepicker({
       'timeFormat': 'HH:mm',
       'minTime': '08:00',
