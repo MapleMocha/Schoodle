@@ -10,6 +10,15 @@ $signup.on('click', function () {
   $('.bg-modal-signup').css({display: 'flex'});
 });
 
+const $logout = $('.logoutButton');
+$logout.on('click', function () {
+  $.ajax({
+    type: "POST",
+    url: "/logout",
+    success: location.reload()
+  });
+});
+
 const $close = $('.close');
 $close.on('click', function () {
   $('.bg-modal-login').css({display: 'none'});

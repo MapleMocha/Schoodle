@@ -59,7 +59,8 @@ app.get("/", (req, res) => {
 // Create page
 
 app.get("/events/new", (req, res) => {
-  res.render("create");
+  let templateVars = {userObject: req.session.user_id};
+  res.render("create", templateVars);
 });
 
 // Post to Event page
@@ -92,6 +93,7 @@ app.post("/events", (req, res) => {
 
 //Logs out the User by clearing the session
 app.post("/logout", (req,res) => {
+
   req.session = null;
   res.redirect("/");
 });

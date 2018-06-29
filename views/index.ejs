@@ -20,9 +20,19 @@
     <main class="container">
       <h1>Welcome to Schoodle!</h1>
       <p>The scheduling app of your dreams...</p>
+
+      <% if (userObject == undefined) { %>
+
+      <h3>Please sign in to create en event.</h3>
+
+      <% } else { %>
+
       <form action="/events/new" method="GET">
-        <button class="button">create event</button>
+        <button class="button">Create event</button>
       </form>
+
+      <% } %>
+
     </main>
 
 
