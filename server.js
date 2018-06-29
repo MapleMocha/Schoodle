@@ -89,6 +89,58 @@ app.post("/events", (req, res) => {
   // res.redirect("/event/:id")
 })
 
+app.post("/register", (req, res) => {
+
+  const fullNameSubmitted = req.body.name;
+  const emailSubmitted = req.body.email;
+  const hashedPass = bcrypt.hashSync(req.body.password, 10);
+
+  knex.where({
+    'email': emailSubmitted
+    })
+    .select('*')
+    .from('admin')
+    .then(function (result) {
+
+      if (result == false) {
+        knex('admin')
+          .insert({name: fullNameSubmitted, email: emailSubmitted, password: hashedPass})
+          .returning('id')
+          .then(function(id) {
+
+            req.session.user_id = id;
+
+            res.redirect("/");
+
+          });
+      } else {
+        res.sendStatus(400);
+      }
+
+    });
+
+  // if (knex.select(email).from('admin') === email) {
+  //   console.log("Ya done fucked up kid");
+  // }
+
+
+  // for (let user in users) {           //Makes sure email and password are filled in + if user already exists.
+  //   if (req.body.name === '' || req.body.email === '' || req.body.password === '' || req.body.email === knex.select('email').from('admin')) {
+  //     res.sendStatus(400);
+  //   }
+  // }
+  // Promise.all([
+  //   knex('admin')
+  //     .insert({name: name})
+  //   ])
+  // // req.body.id = generateRandomString(); //Creates a unique ID for the new user.
+  // users[req.body.id] = req.body;
+  // const pass = req.body.password;
+  // const hashedPass = bcrypt.hashSync(pass, 10);
+  // req.session.user_id = req.body.id;   //Creates the cookie "user_id" which will remember who is logged in.
+
+});
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });

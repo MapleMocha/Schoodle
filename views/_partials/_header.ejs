@@ -49,8 +49,8 @@
     <div class="close">+</div>
     <h1>Login</h1>
     <form>
-      <input class="login" type="text" placeholder="Email">
-      <input class="login" type="text" placeholder="Password">
+      <input name="email" class="login" type="text" placeholder="Email">
+      <input name="password" class="login" type="text" placeholder="Password">
       <a class="btn btn-default login" href="">Submit</a>
     </form>
   </div>
@@ -60,11 +60,11 @@
   <div class="modal-content-signup">
     <div class="close">+</div>
     <h1>Sign Up</h1>
-    <form>
-      <input class="login" id="signupName" type="text" placeholder="Name">
-      <input class="login" id="signupEmail" type="text" placeholder="Email">
-      <input class="login" id="signupPassword" type="text" placeholder="Password">
-      <a class="btn btn-default signup" href="">Submit</a>
+    <form method="POST" action="/register">
+      <input name="name" class="login" id="signupName" type="text" placeholder="Name">
+      <input name="email" class="login" id="signupEmail" type="email" placeholder="Email">
+      <input name="password" class="login" id="signupPassword" type="password" placeholder="Password">
+      <input type="submit" class="btn btn-default signup">
     </form>
   </div>
 </div>
