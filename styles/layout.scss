@@ -24,13 +24,15 @@ nav {
   text-align: center;
   color: #323947;
   .button{
-    background-color: #b2cbdb;
+    background-color: #323947;
     border: 1px solid #323947;
+    color: #f6e474;
     border-radius: 5px;
     padding: 10px;
   }
   .button:hover {
     background-color: #f6e474;
+    color: #323947;
     border: 1px solid #323947;
   }
 }

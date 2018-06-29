@@ -31,7 +31,7 @@
     <nav id="nav-bar">
       <span class="header">Schoodle</span>
     </nav>
-
+    <form action="/events" method="POST">
     <main class="container">
       <section class="alert">
         <p class="name-alert"></p>
@@ -42,27 +42,27 @@
       </section>
       <section class="create-event">
         <h1>Create Event</h1>
-        <form action="/events" method="POST">
           <textarea class="name" name="name" placeholder="name"></textarea>
           <textarea class="email" name="email" placeholder="email"></textarea>
           <textarea class="title" name="title" placeholder="event title"></textarea>
           <textarea class="description" name="description" placeholder="event description"></textarea>
-          <div><input name="day" class ="date" type="input" /></div>
-
+          <div>Select Dates:<input name="day" class ="date" type="input" /></div>
           <button type="submit" class="button">create</button>
-        </form>
-
       </section>
-      <section class="date-and-time">
+      <section class="space"></section>
+    </main>
+    <section class="date-and-time">
         <div class='categories'>
           <p style='padding-right: 30px'>Dates</p>
           <p>Start Time</p>
           <p>End Time</p>
+
         </div>
         <p class="days"></p>
-      </section>
-    </main>
+        <p class="delete"></p>
 
+      </section>
+ </form>
   </body>
 
 

@@ -9,11 +9,12 @@ body {
     box-sizing: inherit;
   }
   font-family: 'Montserrat', sans-serif;
-
+background-color: #e4ecf2;
 }
 
 
 .container {
+
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -80,7 +81,8 @@ body {
       background-color: #b2cbdb;
     }
     .button {
-      background-color: #f6e474;
+      background-color: #323947;
+      color: #f6e474;
       display: flex;
       margin-left: auto;
       margin-right: 50px;
@@ -89,14 +91,27 @@ body {
       border: 1px solid #323947;
       border-radius: 5px;
     }
+    .button:hover {
+      background-color: #f6e474;
+      color: #323947;
+      border: 1px solid #323947;
+    }
   }
-  .date-and-time {
+  .space {
+    width: 300px;
+    margin-right: 50px;
+  }
+}
+
+.date-and-time {
+    color: #323947;
+    background-color: #fffadb;
     border: 1px solid #323947;
     border-radius: 10px;
     width: 300px;
-    height: 350px;
-    margin-right: 50px;
-    padding: 10px;
+    margin: auto;
+    padding-left: 20px;
+    padding-right: 20px;
     .categories{
       font-weight: bold;
       display: flex;
@@ -113,6 +128,5 @@ body {
       justify-content: space-between;
     }
   }
-}
 
 

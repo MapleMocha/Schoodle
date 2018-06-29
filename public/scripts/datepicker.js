@@ -27,7 +27,7 @@ $(document).ready(function() {
       if (ret.length == 1)
           ret = "0" + ret;
       return ret;
-}
+  }
 
   $(function () {
       $(".days").text("");
@@ -63,7 +63,7 @@ $(document).ready(function() {
   });
 
   function addStart() {
-    $('.days').append("<input type='text' class='start' style='width: 80px; margin-bottom: 10px'>");
+    $('.days').append("<input type='text' class='start' name='start' style='width: 80px; margin-bottom: 10px'>");
     $('.start').timepicker({
       'timeFormat': 'HH:mm',
       'minTime': '08:00',
@@ -71,15 +71,17 @@ $(document).ready(function() {
     });
   }
 
-
-
   function addEnd() {
-    $('.days').append("<input type='text' class='end' style='width: 80px; margin-bottom: 10px'>");
+    $('.days').append("<input type='text' class='end' name='end' style='width: 80px; margin-bottom: 10px'>");
     $('.end').timepicker({
       'timeFormat': 'HH:mm',
       'minTime': '08:00',
       'maxTime': '22:00'
     });
   }
+
+  // function delete() {
+  //   $('.delete').append("<input type='input' class='remove' name='delete'>")
+  // }
 
 });
