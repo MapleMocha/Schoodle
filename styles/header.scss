@@ -6,6 +6,17 @@ $dropDown       : false;
 body {
   background-color: #e4ecf2;
 }
+#logoutButton {
+  margin: 1em;
+  color:#323947;
+  background-color:#b2cbdb;
+
+  &:hover, &:focus {
+    opacity: 0.75;
+    color:#f6e474;
+    background-color:#323947;
+  }
+}
 .bg-modal-login {
   width: 100%;
   height: 100%;

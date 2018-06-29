@@ -52,7 +52,8 @@ app.use("/api/users", usersRoutes(knex));
 // Home page
 
 app.get("/", (req, res) => {
-  res.render("index");
+  let templateVars = {userObject: req.session.user_id};
+  res.render("index", templateVars);
 });
 
 // Create page
@@ -89,6 +90,38 @@ app.post("/events", (req, res) => {
   // res.redirect("/event/:id")
 })
 
+//Logs out the User by clearing the session
+app.post("/logout", (req,res) => {
+  req.session = null;
+  res.redirect("/");
+});
+
+//Logs in the User
+app.post("/login", (req, res) => {
+
+  const emailSubmitted = req.body.email;
+  const passwordSubmitted = req.body.password;
+
+  knex.where({
+    'email': emailSubmitted,
+    })
+    .select('*')
+    .from('admin')
+    .then(function(result){
+      bcrypt.compare(passwordSubmitted, result[0].password)
+      .then(function(resu) {
+        if (resu == false) {
+          res.sendStatus(400);
+        }
+        req.session.user_id = result[0].id;
+        res.redirect("/");
+      });
+    });
+  });
+
+
+
+//Registers a new user
 app.post("/register", (req, res) => {
 
   const fullNameSubmitted = req.body.name;
