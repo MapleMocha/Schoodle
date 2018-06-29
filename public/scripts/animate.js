@@ -15,7 +15,7 @@ $logout.on('click', function () {
   $.ajax({
     type: "POST",
     url: "/logout",
-    success: location.reload()
+    success: window.location.href = "/"
   });
 });
 

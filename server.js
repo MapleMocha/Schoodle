@@ -131,6 +131,11 @@ app.post("/register", (req, res) => {
 
   const fullNameSubmitted = req.body.name;
   const emailSubmitted = req.body.email;
+
+    if (fullNameSubmitted === '' || emailSubmitted === '' || req.body.password === '') {
+      res.sendStatus(400);
+    }
+
   const hashedPass = bcrypt.hashSync(req.body.password, 10);
 
   knex.where({
