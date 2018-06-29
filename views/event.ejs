@@ -50,28 +50,30 @@
                   <th class='user-column'> Voter: </th>
 
                   <% for(let i = 0; i < columnCount; i++) { %>
-                        <th class='date'><%-`${dayName[i]} ${dayNum[i]} ${month[i]} ${year[i]}`%></th>
+                        <th class='date'><%-`${dayName[i]} \n ${month[i]}, ${dayNum[i]}\n ${startTime[i]} - ${endTime[i]} \n${year[i]} `%></th>
                    <% }  %>
 
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class='user-column'> <%-`${users[0][0]}`%> </td>
-                  <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
-                  <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
-                  <td class='ex'><i class="far fa-times-circle fa-2x"></i></td>
-                  <td class='ex'><i class="far fa-times-circle fa-2x"></i></td>
-                  <td class='ex'><i class="far fa-times-circle fa-2x"></i></td>
-                </tr>
-                <tr>
-                  <td class='user-column'> <%-`${users[1][0]}`%></td>
-                  <td class='ex'><i class="far fa-times-circle fa-2x"></i></td>
-                  <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
-                  <td class='ex'><i class="far fa-times-circle fa-2x"></i></td>
-                  <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
-                  <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
-                </tr>
+                <% for(let i = 0; i < users.length; i++){ %>
+
+
+                  <tr>
+                    <td class='user-column'> <%-`${users[i][0]}`%> </td>
+                    <% for(let i = 0; i < columnCount; i++) { %>
+                      <p>
+                       <%-`here ${users[i][2][0]}` %>
+                      </p>
+                        <%  if(users[i][2].includes(i)) {%>
+                              <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
+                      <% } else{  %>
+                              <td class='ex'><i class="far fa-times-circle fa-2x"></i></td>
+                        <% }
+                      }  %>
+                  </tr>
+
+                <% } %>
                 <tr class='new-user'>
                   <td>
                     <form>
@@ -93,7 +95,8 @@
               <button>Vote!</button>
             </div>
 
-
+            <%#  for"submited" <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
+            <td class='ex'><i class="far fa-times-circle fa-2x"></i></td> %>
 
 
   </body>
