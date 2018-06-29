@@ -58,6 +58,7 @@ app.get("/events/:id", (req, res) => {
        endTime: [],
        users:[],
        userChoices: [],
+       allDateOptionIds: [],
        currentUser: '',
 
      };
@@ -95,6 +96,8 @@ app.get("/events/:id", (req, res) => {
              let endTime = formatTime(result[i].timeEnd);
              templateVars['endTime'].push(endTime); //endTime
 
+             templateVars['allDateOptionIds'].push(result[i].id);
+
            }
         }),
 
@@ -103,35 +106,41 @@ app.get("/events/:id", (req, res) => {
      knex.where({
             eventId: 1,
          })
-         .groupBy('id')
          .select('*')
          .from('users')
          .then(function(result) {
            // console.log(result)
-           for(let i in result){
-             let userName = result[i].name;
-             let userEmail = result[i].email;
-             templateVars['users'].push([userName, userEmail, []]);
+             let extra = [];
 
-             //get each user's selected date_options
-             knex.where({
-                    usersId: i,
-                    eventId: 1,
-                 })
-                 .select('*')
-                 .from('usersDateOptions')
-                 .innerJoin('date_options', 'usersDateOptions.dateOptionsId', 'date_options.id')
-                 .then(function(result) {
-                   console.log(result);
-                   for(let i in result){
-                     console.log('\n\ndate options', result[i].dateOptionsId)
-                     templateVars['users'][i][2].push(result[i].dateOptionsId);
-                   }
-                 });
+             for(let i in result){
+               let userName = result[i].name;
+               let userEmail = result[i].email;
+               let id = result[i].id;
+               templateVars['users'].push([userName, userEmail, id, []]);
+
+               //get each user's selected date_options
+               extra.push(knex.where({
+                      usersId: id,
+                      eventId: '1',
+                   })
+                   .select('*')
+                   .from('usersDateOptions')
+                   .innerJoin('date_options', 'usersDateOptions.dateOptionsId', 'date_options.id')
+                   .then(function(result) {
+                     // console.log("results", result);
+
+                     for(let j in result){
+                       console.log(result[j].dateOptionsId)
+                       templateVars['users'][i][3].push(result[j].dateOptionsId);
+                     }
+
+                     console.log('user:',templateVars['users'][i])
+
+                   }));
+
            }
 
-
-
+           return Promise.all(extra)
          }),
 
 
