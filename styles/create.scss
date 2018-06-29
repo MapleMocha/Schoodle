@@ -14,9 +14,25 @@ body {
 
 
 .container {
-  width: 700px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-flow: wrap;
+  justify-content: space-between;
   margin: auto;
+  .alert{
+    text-align: right;
+    color: red;
+    width: 300px;
+    height: 400px;
+    margin-left: 50px;
+    padding-top: 70px;
+    p {
+      height: 28px;
+    }
+  }
   .create-event{
+    width: 500px;
     border: 1px solid #323947;
     border-radius: 10px;
     background-color: #b2cbdb;
@@ -37,6 +53,9 @@ body {
       margin-top: 5px;
       margin-bottom: 5px;
     }
+    .description {
+        height: 70px;
+      }
     .date {
       display: none;
     }
@@ -69,6 +88,29 @@ body {
       margin-bottom: 20px;
       border: 1px solid #323947;
       border-radius: 5px;
+    }
+  }
+  .date-and-time {
+    border: 1px solid #323947;
+    border-radius: 10px;
+    width: 300px;
+    height: 350px;
+    margin-right: 50px;
+    padding: 10px;
+    .categories{
+      font-weight: bold;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-flow: wrap;
+      justify-content: space-between;
+    }
+    .days {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-flow: wrap;
+      justify-content: space-between;
     }
   }
 }
