@@ -60,6 +60,7 @@ app.get("/events/:id", (req, res) => {
        userChoices: [],
        allDateOptionIds: [],
        currentUser: '',
+       // userObject: req.session.user_id,
 
      };
 
