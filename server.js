@@ -66,29 +66,32 @@ app.get("/events/new", (req, res) => {
 // Post to Event page
 
 app.post("/events", (req, res) => {
-  let {name, email, title, description, day, timeStart, timeEnd} = req.body;
-  Promise.all([
-    knex('admin')
-      .insert({name: name, email: email})
-      .returning('id')
-      .then(function(id) {
-        knex('event')
-        .insert({name: title, adminId: id[0], description: description})
+  let {name, email, title, description, day, start, end} = req.body;
+  //if (name && email && title && description && day && start && end) {
+    console.log(start)
+    Promise.all([
+      knex('admin')
+        .insert({name: name, email: email})
         .returning('id')
         .then(function(id) {
-          knex('date_options')
-          .insert({date: day, timeStart: `${day} ${timeStart}`, timeEnd: `${day} ${timeEnd}`, eventId: id[0]})
-          .then(function() {
-            console.log("inserted")
+          knex('event')
+            .insert({name: title, adminId: id[0], description: description})
+            .returning('id')
+            .then(function(id) {
+              for (var i = 0; i < start.length; i++) {
+                knex('date_options')
+                  .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
+                  .then(function() {
+                    console.log("inserted")
+                  })
+                }
+              })
           })
-        })
-      })
-      .catch(function(err) {
-        console.log(err);
-      }),
+          .catch(function(err) {
+            console.log(err);
+          }),
     ])
-
-  // res.redirect("/event/:id")
+  //}
 })
 
 //Logs out the User by clearing the session
