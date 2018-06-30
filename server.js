@@ -313,40 +313,37 @@ app.post("/events", (req, res) => {
     return uniqueKey;
   };
   let uniqueUrl = generateShortUrl();
-  let {name, email, title, description, day, start, end} = req.body;
-  Promise.all([
-    knex('admin')
-      .insert({name: name, email: email})
-      .returning('id')
-      .then(function(id) {
-        knex('event')
-          .insert({name: title, adminId: id[0], description: description, uniqueURL:uniqueUrl})
-          .returning('id')
-          .then(function(id) {
-            if (typeof start === 'string') {
-              knex('date_options')
-                .insert({date: day, timeStart: `${day} ${start}:00`, timeEnd: `${day} ${end}:00`, eventId: id[0]})
-                .then(function() {
-                  console.log("inserted");
-                });
-            }
-            else {
-            for (var i = 0; i < start.length; i++) {
-              knex('date_options')
-                .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
-                .then(function() {
-                  console.log("inserted");
-                });
+  let existingAdminID;
+  knex.select('id').from('admin').where('id', req.session.user_id).then(function(result) {
+    existingAdminID = result[0].id;
+    let {name, email, title, description, day, start, end} = req.body;
+    Promise.all([
+          knex('event')
+            .insert({name: title, adminId: existingAdminID, description: description, uniqueURL:uniqueUrl})
+            .returning('id')
+            .then(function(id) {
+              if (typeof start === 'string') {
+                knex('date_options')
+                  .insert({date: day, timeStart: `${day} ${start}:00`, timeEnd: `${day} ${end}:00`, eventId: id[0]})
+                  .then(function() {
+                    console.log("inserted");
+                  });
               }
-            }
-          });
-        })
-      .catch(function(err) {
-        console.log(err);
-      }),
-  ]).then(function() {
-    setTimeout(function() {res.redirect(`events/${uniqueUrl}`)}, 500);
-  });
+              else {
+              for (var i = 0; i < start.length; i++) {
+                knex('date_options')
+                  .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
+                  .then(function() {
+                    console.log("inserted");
+                  });
+                }
+              }
+            })
+    ]).then(function() {
+      setTimeout(function() {res.redirect(`events/${uniqueUrl}`)}, 500);
+    });
+  })
+
 });
 
 app.listen(PORT, () => {

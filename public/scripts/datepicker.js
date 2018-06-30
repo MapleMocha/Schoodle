@@ -69,7 +69,6 @@ $(document).ready(function() {
     addEnd();
     $('.delete').on('click', function (event){
       $(event.target).parent().remove();
-      console.log(event);
     })
   }
 
