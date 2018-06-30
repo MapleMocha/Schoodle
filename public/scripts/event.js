@@ -1,8 +1,6 @@
 
 $(document).ready(function() {
 
-
-
   //helper function to create warning message if username and email not submitted properly
   function warning(message) {
     const $newMessage = $(`<p class='warning'>${message}</p>`)
@@ -14,21 +12,23 @@ $(document).ready(function() {
   let clicked = false;
   const $rowToSubmit = $('.new-user .name')
   let chosen = [];
+  let email;
+  let username;
 
   $('#vote').on('click', (event) => {
 
     if(!clicked){
 
 
-      let $username = $('.new-user .name .usernameInput')
-      let $email = $('.new-user .name .emailInput')
+      username = $('.new-user .name .usernameInput').val()
+      email = $('.new-user .name .emailInput').val()
 
-      if($username.val() && $email.val()){
+      if(username && email){
 
           clicked = true;
 
           const submitChoice = function(){
-            let $usernameSubmission = $(`<td class='user-column'>${$username.val()}</td>`)
+            let $usernameSubmission = $(`<td class='user-column new-name'>${username}</td><p class='new-email'>${email}</p>`)
 
             $rowToSubmit.replaceWith($usernameSubmission);
 
@@ -47,8 +47,8 @@ $(document).ready(function() {
 
 
           let newUser = {
-            name: $username.val(),
-            email: $email.val(),
+            name: username,
+            email: email,
             eventId: $('h3').html(),
             dateOptionsId: chosen
           }
@@ -65,9 +65,9 @@ $(document).ready(function() {
             }
 
           });
-      } else if((!$email.val()) && $username.val()){
+      } else if((!email) && username){
         warning('Need to enter an email :)')
-      } else if($email.val() && (!$username.val())){
+      } else if(email && (!username)){
         warning('Need to enter a username :)')
       } else {
         warning('Need to enter an email and username :)')
@@ -78,6 +78,29 @@ $(document).ready(function() {
       clicked = false;
 
       const $inputFields = $('.new-user .user-column')
+
+      // const username = $('.new-name').html()
+      // const email = $('.new-email').html()
+
+      let delUser = {
+        name: username,
+        email: email,
+        eventId: $('h3').html(),
+      }
+      console.log('delUser: ', delUser)
+
+      $.ajax({
+        url: '/events/:id/edit',
+        method: 'POST',
+        data: delUser,
+        success: function (poll) {
+          console.log('success')
+        },
+        error: function(err){
+          console.log('error: ', err)
+        }
+      });
+
 
       $inputFields.replaceWith(`<td class='name'>
           <form>
