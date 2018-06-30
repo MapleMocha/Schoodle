@@ -19,6 +19,8 @@
 <!-- Animation script -->
 <script type="text/javascript" src="/scripts/animate.js"></script>
 
+
+
 <!-- Navbar -->
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -30,11 +32,60 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
+
+    <% if (userObject == undefined) { %>
+
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/event/create" class="btn btn-default">Create New Event</a></li>
+        <li><a class="btn btn-default signupButton">Sign Up</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a class="btn btn-default loginButton">Login</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
+
+    <% } else { %>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a class="btn btn-default logoutButton">Logout</a>
+<!--           <form method="POST" action="/logout">
+            <input type="submit" class="btn btn-default" id="logoutButton" value="Log Out">
+          </form> -->
+        </li>
+      </ul>
+    </div>
+
+
+
+    <% } %>
+
   </div><!-- /.container-fluid -->
 </nav>
 
+
+<div class="bg-modal-login">
+  <div class="modal-content-login">
+    <div class="close">+</div>
+    <h1>Login</h1>
+    <form method="POST" action="/login">
+      <input name="email" class="login" type="text" placeholder="Email">
+      <input name="password" class="login" type="password" placeholder="Password">
+      <input type="submit" class="btn btn-default signin">
+    </form>
+  </div>
+</div>
+
+<div class="bg-modal-signup">
+  <div class="modal-content-signup">
+    <div class="close">+</div>
+    <h1>Sign Up</h1>
+    <form method="POST" action="/register">
+      <input name="name" class="login" id="signupName" type="text" placeholder="Name">
+      <input name="email" class="login" id="signupEmail" type="email" placeholder="Email">
+      <input name="password" class="login" id="signupPassword" type="password" placeholder="Password">
+      <input type="submit" class="btn btn-default signup">
+    </form>
+  </div>
+</div>

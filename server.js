@@ -2,20 +2,24 @@
 
 require('dotenv').config();
 
-const PORT        = process.env.PORT || 8080;
-const ENV         = process.env.ENV || "development";
-const express     = require("express");
-const bodyParser  = require("body-parser");
-const sass        = require("node-sass-middleware");
-const app         = express();
+const PORT          = process.env.PORT || 8080;
+const ENV           = process.env.ENV || "development";
+const express       = require("express");
+const bodyParser    = require("body-parser");
+const sass          = require("node-sass-middleware");
+const app           = express();
+const cookieParser  = require('cookie-parser');
+const cookieSession = require('cookie-session');
+const bcrypt        = require('bcryptjs');
 
-const knexConfig  = require("./knexfile");
-const knex        = require("knex")(knexConfig[ENV]);
-const morgan      = require('morgan');
-const knexLogger  = require('knex-logger');
+
+const knexConfig    = require("./knexfile");
+const knex          = require("knex")(knexConfig[ENV]);
+const morgan        = require('morgan');
+const knexLogger    = require('knex-logger');
 
 // Seperated Routes for each Resource
-const usersRoutes = require("./routes/users");
+const usersRoutes   = require("./routes/users");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -24,6 +28,13 @@ app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ["big boi with big secrets"],
+
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,13 +52,15 @@ app.use("/api/users", usersRoutes(knex));
 // Home page
 
 app.get("/", (req, res) => {
-  res.render("index");
+  let templateVars = {userObject: req.session.user_id};
+  res.render("index", templateVars);
 });
 
 // Create page
 
 app.get("/events/new", (req, res) => {
-  res.render("create");
+  let templateVars = {userObject: req.session.user_id};
+  res.render("create", templateVars);
 });
 
 // Post to Event page
@@ -88,6 +101,75 @@ app.post("/events", (req, res) => {
   ])
 })
 
+//Logs out the User by clearing the session
+app.post("/logout", (req,res) => {
+
+  req.session = null;
+  res.redirect("/");
+});
+
+//Logs in the User
+app.post("/login", (req, res) => {
+
+  const emailSubmitted = req.body.email;
+  const passwordSubmitted = req.body.password;
+
+  knex.where({
+    'email': emailSubmitted,
+    })
+    .select('*')
+    .from('admin')
+    .then(function(result){
+      bcrypt.compare(passwordSubmitted, result[0].password)
+      .then(function(resu) {
+        if (resu == false) {
+          res.sendStatus(400);
+        }
+        req.session.user_id = result[0].id;
+        res.redirect("/");
+      });
+    });
+  });
+
+
+
+//Registers a new user
+app.post("/register", (req, res) => {
+
+  const fullNameSubmitted = req.body.name;
+  const emailSubmitted = req.body.email;
+
+    if (fullNameSubmitted === '' || emailSubmitted === '' || req.body.password === '') {
+      res.sendStatus(400);
+    }
+
+  const hashedPass = bcrypt.hashSync(req.body.password, 10);
+
+  knex.where({
+    'email': emailSubmitted
+    })
+    .select('*')
+    .from('admin')
+    .then(function (result) {
+
+      if (result == false) {
+        knex('admin')
+          .insert({name: fullNameSubmitted, email: emailSubmitted, password: hashedPass})
+          .returning('id')
+          .then(function(id) {
+
+            req.session.user_id = id;
+
+            res.redirect("/");
+
+          });
+      } else {
+        res.sendStatus(400);
+      }
+
+    });
+
+});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

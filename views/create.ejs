@@ -9,6 +9,12 @@
     <!-- Date Picker -->
     <link href = "https://code.jquery.com/ui/1.10.4/themes/redmond/jquery-ui.css" rel = "stylesheet">
 
+    <!-- CSS for NavBar -->
+    <link rel="stylesheet" type="text/css" href="/styles/header.css">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/create.css" type="text/css" />
@@ -29,10 +35,18 @@
 
   <body>
 
-    <nav id="nav-bar">
-      <span class="header">Schoodle</span>
-    </nav>
-    <form action="/events" method="POST">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/" style="color:#323947">Schoodle </a>
+      <a href="/"><img id="logo-icon" src="/resources/SchoodleIconTransparent.png"></a>
+      <!-- <img class="chickin" src="/resources/chickin.png"> -->
+    </div>
+  </div>
+</nav>
+
+    <form action="/events" method="POST" class="formCSS">
     <main class="container">
       <section class="alert">
         <p class="name-alert"></p>
@@ -51,14 +65,13 @@
           <button type="submit" class="button">create</button>
       </section>
       <section class="space"></section>
-    </main>
-    <section class="date-and-time">
+      <section class="date-and-time">
         <div class='categories'>
           <p>Dates</p>
           <p style="padding-left: 45px">Start Time</p>
           <p>End Time</p>
         </div>
-        <p class="days"></p>
+      <p class="days"></p>
 
 
       </section>
@@ -72,8 +85,13 @@
       <form method="POST" action="/events/:id">
         <input type="submit" class="see-event" value="go to event">
       </form>
+    </div>
   </div>
-  </div>
+    </main>
+  </form>
+
+  <footer> <% include ./_partials/_footer %> </footer>
+
   </body>
 
 

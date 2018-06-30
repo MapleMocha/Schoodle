@@ -4,15 +4,17 @@ html {
 
 body {
 
+  font-family: 'Montserrat', sans-serif;
+  background-color: #e4ecf2;
   box-sizing: inherit;
   &:before, &:after {
     box-sizing: inherit;
   }
-  font-family: 'Montserrat', sans-serif;
-background-color: #e4ecf2;
 }
 
-
+.formCSS {
+  position: absolute;
+}
 .container {
 
   display: flex;
@@ -104,14 +106,15 @@ background-color: #e4ecf2;
 }
 
 .date-and-time {
+
     color: #323947;
     background-color: #fffadb;
     border: 1px solid #323947;
     border-radius: 10px;
     width: 500px;
-    margin: auto;
-    padding-left: 50px;
-    padding-right: 50px;
+    margin-left: 290px;
+    padding-left: 20px;
+    padding-right: 20px;
     .categories{
       font-weight: bold;
       display: flex;

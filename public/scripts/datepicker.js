@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+
   let dates = [];
 
   function addDate(date) {

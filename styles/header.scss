@@ -6,9 +6,78 @@ $dropDown       : false;
 body {
   background-color: #e4ecf2;
 }
+
+.bg-modal-login {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  position: absolute;
+  top: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    margin-bottom: 40px;
+  }
+}
+.modal-content-login {
+  background-color: #e4ecf2;
+  position: relative;
+  width: 500px;
+  height: 300px;
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+}
+.close {
+  position: absolute;
+  top: 0;
+  right: 14px;
+  font-size: 42px;
+  transform: rotate(45deg);
+  cursor: pointer;
+}
+
+.login {
+  background-color: white;
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  border-radius: 15px;
+  padding-left: 10px;
+}
+.bg-modal-signup {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  position: absolute;
+  top: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content-signup {
+  background-color: #e4ecf2;
+  position: relative;
+  width: 500px;
+  height: 300px;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  h1 {
+    margin-bottom: 25px;
+  }
+}
+.signup, .signin {
+  margin-top: 10px;
+}
 #footer {
   position: fixed;
   bottom:0px;
+  border: 0px solid black;
+  background-color: #5bb0e3;
   width: 100%;
 }
 .footerText {
