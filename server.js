@@ -254,7 +254,9 @@ app.post("/login", (req, res) => {
     .select('*')
     .from('admin')
     .then(function(result){
-      console.log(result, "+++++++++++++++++++++++++++++++++")
+      if (result == false) {
+        res.sendStatus(400);
+      }
       bcrypt.compare(passwordSubmitted, result[0].password)
       .then(function(resu) {
         if (resu == false) {
