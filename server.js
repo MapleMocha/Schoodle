@@ -220,10 +220,16 @@ app.post('/events/:id/edit', (req, res) => {
                .then(function(id){
                  knex('usersDateOptions').where('usersId', id[0].id)
                                          .del()
+                                         .then(function(){
+
+                                         })
                })
                .then(function() {
                     knex('users').where('email', req.body.email)
-                            .del()
+                                 .del()
+                                 .then(function(){
+
+                                 })
 
                })
 
