@@ -355,7 +355,7 @@ const formatTime = function(timeObject){
           console.log(err);
         }),
     ]).then(function() {
-      res.redirect(`events/${uniqueUrl}`)
+      setTimeout(function() {res.redirect(`events/${uniqueUrl}`)}, 500)
     })
   });
 
