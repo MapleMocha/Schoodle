@@ -56,49 +56,170 @@ app.get("/", (req, res) => {
   res.render("index", templateVars);
 });
 
-// Create page
-
 app.get("/events/new", (req, res) => {
   let templateVars = {userObject: req.session.user_id};
   res.render("create", templateVars);
 });
 
-// Post to Event page
+// Event page
+app.get("/events/:id", (req, res) => {
 
-app.post("/events", (req, res) => {
-  //console.log(req.body);
-  let {name, email, title, description, day, start, end} = req.body;
+ let info = [];
+ let templateVars = {
+       uniqueUrl: req.params.id,
+       // longURL: Document.URL
+       dayNum: [],
+       dayName: [],
+       month: [],
+       year: [],
+       startTime: [],
+       endTime: [],
+       users:[],
+       userChoices: [],
+       allDateOptionIds: [],
+       // currentUser: '',
+       // eventId: '',
+       // eventId: req.body.eventId,
+       // userObject: req.session.user_id,
+
+     };
+   let currEvent;
+
+   knex.where({
+     uniqueURL: req.params.id,
+   })
+   .select('id')
+   .from('event')
+   .returning('id')
+   .then(function (id){
+     currEvent = id[0].id;
+     templateVars['eventId'] = currEvent;
+     console.log("\n\n\n\nCURRENT EVENT ID: ", currEvent);
+
+
   Promise.all([
-    knex('admin')
-      .insert({name: name, email: email})
-      .returning('id')
-      .then(function(id) {
-        knex('event')
-          .insert({name: title, adminId: id[0], description: description})
-          .returning('id')
-          .then(function(id) {
-            if (typeof start === 'string') {
-              knex('date_options')
-                .insert({date: day, timeStart: `${day} ${start}:00`, timeEnd: `${day} ${end}:00`, eventId: id[0]})
-                .then(function() {
-                  console.log("inserted")
-                })
-            }
-            else {
-            for (var i = 1; i < start.length; i++) {
-              knex('date_options')
-                .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
-                .then(function() {
-                  console.log("inserted")
-                })
-              }
-            }
-            })
+
+    //find how many date options there were for the selected event
+    knex.where({
+          eventId: currEvent,
         })
-      .catch(function(err) {
-        console.log(err);
-      }),
-  ])
+        .count('*')
+        .from('date_options')
+        .then(function(result) {
+          templateVars['columnCount'] = result[0].count;
+        })
+        .catch(function(err) {
+          console.log(err);
+        }),
+
+
+    //get the specific dates for each option
+    knex.where({
+          eventId: currEvent,
+        })
+        .select('*')
+        .from('date_options')
+        .then(function(result) {
+           for(let i in result){
+             let date = String(result[i].date)
+             templateVars['dayName'].push(date.slice(0,3)); //dayName
+             templateVars['dayNum'].push(date.slice(8,10)); //dayNum
+             templateVars['month'].push(date.slice(4,7)); //month
+             templateVars['year'].push(date.slice(11,15)); //year
+
+             let startTime = formatTime(result[i].timeStart);
+             templateVars['startTime'].push(startTime); //startTime
+
+             let endTime = formatTime(result[i].timeEnd);
+             templateVars['endTime'].push(endTime); //endTime
+
+             templateVars['allDateOptionIds'].push(result[i].id);
+
+           }
+        }),
+
+
+     //get the users that have responded to the selected event
+     knex.where({
+            eventId: currEvent,
+         })
+         .select('*')
+         .from('users')
+         .then(function(result) {
+
+             let extra = [];
+
+             for(let i in result){
+               let userName = result[i].name;
+               let userEmail = result[i].email;
+               let id = result[i].id;
+               templateVars['users'].push([userName, userEmail, id, []]);
+
+               //get each user's selected date_options
+               extra.push(knex.where({
+                      usersId: id,
+                      eventId: currEvent,
+                   })
+                   .select('*')
+                   .from('usersDateOptions')
+                   .innerJoin('date_options', 'usersDateOptions.dateOptionsId', 'date_options.id')
+                   .then(function(result) {
+
+                     for(let j in result){
+                       templateVars['users'][i][3].push(result[j].dateOptionsId);
+                     }
+
+
+                   }));
+
+           }
+
+           return Promise.all(extra)
+         }),
+
+
+    ]).then(function(result) {
+
+      res.render("event", templateVars);
+
+    })
+  });
+
+});
+
+app.post('/events/:id', (req, res) => {
+  console.log("HERE\n\n\n\n\n\n")
+
+  let name = req.body.name;
+  let email = req.body.email;
+  let eventId = req.body.eventId;
+  let currDateOptionsIds = req.body.dateOptionsId;
+  let newId;
+
+
+  knex('users').insert({name: name, email: email, eventId: eventId})
+                 .returning('id')
+                 .then(function(id){
+
+
+                   newId = id;
+                   var extra = []
+
+                   for(let i = 0; i < currDateOptionsIds.length; i++){
+
+                     extra.push(knex('usersDateOptions').insert({
+                                                            dateOptionsId: Number(currDateOptionsIds[i]),
+                                                            usersId:newId[0]
+                                                          }))
+
+
+                    }
+                    return Promise.all(extra)
+                  })
+
+                 .then(function () {
+                   res.redirect('/events/:id')
+                 })
 })
 
 //Logs out the User by clearing the session
@@ -170,6 +291,73 @@ app.post("/register", (req, res) => {
     });
 
 });
+
+
+    //helper function to put times in 12 hour clock and format
+    //
+const formatTime = function(timeObject){
+    let newTime = String(timeObject).slice(16,21);
+    let temp = Number(newTime.slice(0,2));
+    if(temp > 12){
+      temp -= 12;
+      return '0'+temp+newTime.slice(2)+'pm';
+    } else if (temp == 0){
+      return '12:00am';
+    } else{
+      return newTime+'am';
+    }
+  }
+
+  // Create page
+
+  app.get("/events", (req, res) => {
+    res.render("create");
+  });
+
+  // Post to Event page
+
+  app.post("/events", (req, res) => {
+    //console.log(req.body);
+    const generateShortUrl = function(){
+      const uniqueKey = Math.random().toString(36).replace('0.','').split('').slice(0,12).join('');
+      return uniqueKey;
+    }
+    let uniqueUrl = generateShortUrl();
+    let {name, email, title, description, day, start, end} = req.body;
+    Promise.all([
+      knex('admin')
+        .insert({name: name, email: email})
+        .returning('id')
+        .then(function(id) {
+          knex('event')
+            .insert({name: title, adminId: id[0], description: description, uniqueURL:uniqueUrl})
+            .returning('id')
+            .then(function(id) {
+              if (typeof start === 'string') {
+                knex('date_options')
+                  .insert({date: day, timeStart: `${day} ${start}:00`, timeEnd: `${day} ${end}:00`, eventId: id[0]})
+                  .then(function() {
+                    console.log("inserted")
+                  })
+              }
+              else {
+              for (var i = 0; i < start.length; i++) {
+                knex('date_options')
+                  .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
+                  .then(function() {
+                    console.log("inserted")
+                  })
+                }
+              }
+              })
+          })
+        .catch(function(err) {
+          console.log(err);
+        }),
+    ]).then(function() {
+      res.redirect(`events/${uniqueUrl}`)
+    })
+  });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

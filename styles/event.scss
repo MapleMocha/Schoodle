@@ -1,0 +1,100 @@
+$backgroud-color-light: #e4ecf2;
+$backgroud-color-darker: #b2cbdb;
+$accent-yellow:#f6e474;
+$accent-bright-blue: #5bb0e3;
+$text-color: #171a21;
+$accent-dark-blue: #323947;
+$table-grey: #dee2e6;
+$check-color: #dabe10;
+$check-color-backgroud: #f6e474;
+$ex-color: #eb6637;
+$ex-color-backgroud: #f7bba6;
+$custom-font: 'Montserrat', sans-serif;
+
+
+body {
+  margin-top: 50px;
+  text-align: center;
+  background-color: $backgroud-color-light;
+  color: $text-color;
+  font-family: $custom-font;
+
+  h2 i {
+    padding-left: 10px;
+    color: $accent-bright-blue;
+  }
+
+
+  table {
+      margin: auto;
+      width: 80%;
+      max-width: 100%;
+      margin-bottom: 1rem;
+      background-color: transparent;
+      border: 1px solid $accent-dark-blue;
+      border-radius: 10px;
+      &.table-striped tbody tr:nth-of-type(odd) {
+          background-color: rgba(0, 0, 0, 0.05);
+      }
+
+       tr {
+         th, td {
+           padding: 0.75rem;
+           vertical-align: top;
+           border-top: 1px solid $table-grey;
+           text-align: center;
+           border: 1px solid $accent-dark-blue;
+
+         }
+         .user-column {
+           background-color: $backgroud-color-darker;
+         }
+
+       }
+
+       .new-user td {
+         border-left: 1px solid $accent-dark-blue;
+         border-right: 1px solid $accent-dark-blue;
+         border-top: none;
+         border-bottom: none;
+
+         .btn-choice {
+           border-radius: 10px;
+         }
+       }
+
+        thead {
+            th {
+            vertical-align: bottom;
+            border-bottom: 2px solid $table-grey;
+            background-color: $backgroud-color-darker;
+          }
+
+          .date {
+            word-wrap: break-word;
+          }
+        }
+
+        tbody + tbody {
+          border-top: 2px solid $table-grey;
+        }
+
+        .check{
+          color: $check-color;
+          background-color: $check-color-backgroud;
+        }
+
+        .ex{
+          color: $ex-color;
+          background-color: $ex-color-backgroud;
+        }
+      }
+
+      .ids {
+        display:none;
+      }
+
+
+
+
+}

@@ -46,43 +46,43 @@
   </div>
   </nav>
     <form action="/events" method="POST">
-    <main class="container">
-      <section class="alert">
-        <p class="name-alert"></p>
-        <p class="email-alert"></p>
-        <p class="title-alert"></p>
-        <p class="description-alert"></p>
-        <p class="date-alert"></p>
-      </section>
-      <section class="create-event">
-        <h1>Create Event</h1>
-          <textarea class="name" name="name" placeholder="name"></textarea>
-          <textarea class="email" name="email" placeholder="email"></textarea>
-          <textarea class="title" name="title" placeholder="event title"></textarea>
-          <textarea class="description" name="description" placeholder="event description"></textarea>
-          <div>Select Dates: <input name="day" class ="date" type="input" /></div>
-          <button type="submit" class="button">create</button>
-      </section>
-      <section class="space"></section>
-    </main>
-    <section class="date-and-time">
-        <div class='categories'>
-          <p>Dates</p>
-          <p style="padding-left: 45px">Start Time</p>
-          <p>End Time</p>
-        </div>
-        <p class="days"></p>
+      <main class="container">
+        <section class="alert">
+          <p class="name-alert"></p>
+          <p class="email-alert"></p>
+          <p class="title-alert"></p>
+          <p class="description-alert"></p>
+          <p class="date-alert"></p>
+        </section>
+        <section class="create-event">
+          <h1>Create Event</h1>
+            <textarea class="name" name="name" placeholder="name"></textarea>
+            <textarea class="email" name="email" placeholder="email"></textarea>
+            <textarea class="title" name="title" placeholder="event title"></textarea>
+            <textarea class="description" name="description" placeholder="event description"></textarea>
+            <div>Select Dates: <input name="day" class ="date" type="input" /></div>
+            <button type="submit" class="button">create</button>
+        </section>
+        <section class="space"></section>
+      </main>
+      <section class="date-and-time">
+          <div class='categories'>
+            <p>Dates</p>
+            <p style="padding-left: 45px">Start Time</p>
+            <p>End Time</p>
+          </div>
+          <p class="days"></p>
 
 
-      </section>
-  </form>
+        </section>
+      </form>
   <div class="bg-modal-login">
     <div class="modal-content-login">
       <div class="close">+</div>
       <h1>Event URL</h1>
       <p>Send this link to all invitees</p>
       <p class="URL"></p>
-      <form method="POST" action="/events/:id">
+      <form class='movePage' method="GET">
         <input type="submit" class="see-event" value="go to event">
       </form>
   </div>

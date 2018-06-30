@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home Page</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <%# <link rel="stylesheet" href="/styles/layout.css" type="text/css" /> %>
+    <link rel="stylesheet" href="/styles/event.css" type="text/css" />
+
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/event.js"></script>
+    <%# <script src = "https://code.jquery.com/jquery-1.10.2.js"></script> %>
+    <%# <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> %>
+    <%# <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>     ---- which?%>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <!--nav bar -->
+    <nav>
+      <span class='header'>Schoodle</span>
+    </nav>
+
+    <h1>Invite your voters with this link extension: </h1>
+    <div>
+      <h2 id='invite-link'>http://localhost:8080/event/<%-uniqueUrl%><i class="far fa-copy"></i><h2>
+      <!-- image to click to autocopy -->
+
+      <h3 class='ids'><%-`${eventId}`%></h3>
+      <h3>{Event description will go here}</h3>
+    </div>
+<br />
+<br />
+<br />
+<br />
+            <div class='warningMessage'>
+
+            </div>
+            <div>
+              <table>
+                <thead>
+
+                <tr>
+                  <th class='user-column'> Voter: </th>
+
+                  <% for(let i = 0; i < columnCount; i++) { %>
+                        <th class='date'><%-`${dayName[i]} \n ${month[i]}, ${dayNum[i]}\n ${startTime[i]} - ${endTime[i]} \n${year[i]} `%></th>
+                   <% }  %>
+
+                </tr>
+              </thead>
+              <tbody>
+                <% for(let i = 0; i < users.length; i++){ %>
+
+                  <tr>
+                    <td class='user-column'> <%-`${users[i][0]}`%> </td>
+                    <% for(let j = 0; j < allDateOptionIds.length; j++) { %>
+                      <% if(users[i][3].includes(allDateOptionIds[j])){ %>
+                              <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
+                      <% } else{  %>
+                              <td class='ex'><i class="far fa-times-circle fa-2x"></i></td>
+                        <% }
+                      } %>
+                  </tr>
+
+                <% } %>
+                <tr class='new-user'>
+                  <td class='name'>
+                      <input class='usernameInput' type='username' placeholder='Your name'/>
+                      <input class='emailInput'type='email' placeholder='myEmail@Nielemma.com'/>
+                  </td>
+
+                  <% for(let i = 0; i < columnCount; i++) { %>
+                        <td>
+                          <p class='ids'><%-allDateOptionIds[i]%></p>
+                          <button class='btn-choice'>choose</button>
+                        </td>
+                   <% }  %>
+
+                </tr>
+
+
+              </tbody>
+              </table>
+              <%# <form method='POST' action='/events/:id'> %>
+                <button type='submit' id = 'vote'>Vote!</button>
+              <%# </form> %>
+
+            </div>
+
+            <%#  for"submited" <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
+            <td class='ex'><i class="far fa-times-circle fa-2x"></i></td> %>
+
+
+  </body>
+</html>
