@@ -60,7 +60,18 @@ background-color: #e4ecf2;
     .date {
       display: none;
     }
-
+    .ui-datepicker-trigger {
+      background-color: #323947;
+      color: #f6e474;
+      border: 1px solid #323947;
+      border-radius: 5px;
+      margin-left: 5px
+    }
+    .ui-datepicker-trigger:hover {
+      background-color: #f6e474;
+      color: #323947;
+      border: 1px solid #323947;
+    }
     .timepicker {
       margin-left: 50px;
       width: 400px;
