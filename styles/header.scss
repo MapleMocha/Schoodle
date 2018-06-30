@@ -76,15 +76,15 @@ body {
 #footer {
   position: fixed;
   bottom:0px;
-  border: 0px solid black;
   background-color: #5bb0e3;
   width: 100%;
+  .footerText {
+    text-align: center;
+    margin-top: 0.5em;
+    background-color: #5bb0e3;
+  }
 }
-.footerText {
-  text-align: center;
-  margin-top: 0.5em;
-  background-color: $bgDefault;
-}
+
 .navbar-default {
   background-color: $bgDefault;
   border-color: $bgHighlight;
