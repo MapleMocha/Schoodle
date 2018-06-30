@@ -193,26 +193,41 @@ app.post('/events/:id', (req, res) => {
                  .returning('id')
                  .then(function(id){
 
-
-                   newId = id;
+                   newId = id[0];
                    var extra = [];
 
                    for(let i = 0; i < currDateOptionsIds.length; i++){
 
                      extra.push(knex('usersDateOptions').insert({
                                                             dateOptionsId: Number(currDateOptionsIds[i]),
-                                                            usersId:newId[0]
+                                                            usersId:newId
                                                           }));
 
 
                     }
                     return Promise.all(extra);
                   })
-
-                 .then(function () {
-                   res.redirect('/events/:id');
-                 });
 });
+
+app.post('/events/:id/edit', (req, res) => {
+  console.log('email: ', req.body.email, ' username: ', req.body.name)
+
+  knex('users').where({
+                  'email': req.body.email,
+                  'name': req.body.name
+                })
+               .returning('id')
+               .then(function(id){
+                 knex('usersDateOptions').where('usersId', id[0].id)
+                                         .del()
+               })
+               .then(function() {
+                    knex('users').where('email', req.body.email)
+                            .del()
+
+               })
+
+})
 
 // Logs out the User by clearing the session
 app.post("/logout", (req,res) => {
