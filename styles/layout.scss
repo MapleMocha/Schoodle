@@ -1,7 +1,38 @@
-body {
-  background-color: #EEE;
 
-  h1 {
-    color: #244751;
+
+
+html {
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+  &:before, &:after {
+    box-sizing: inherit;
+  }
+  font-family: 'Montserrat', sans-serif;
+  background-color: #e4ecf2;
+}
+
+nav {
+  padding: 20px;
+}
+
+.container {
+  width: 500px;
+  margin: auto;
+  text-align: center;
+  color: #323947;
+  .button{
+    background-color: #323947;
+    border: 1px solid #323947;
+    color: #f6e474;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  .button:hover {
+    background-color: #f6e474;
+    color: #323947;
+    border: 1px solid #323947;
   }
 }

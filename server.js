@@ -39,6 +39,7 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 
 // Home page
+
 app.get("/", (req, res) => {
   res.render("index");
 });
@@ -202,6 +203,50 @@ const formatTime = function(timeObject){
       return newTime+'am';
     }
   }
+
+  // Create page
+
+  app.get("/events/new", (req, res) => {
+    res.render("create");
+  });
+
+  // Post to Event page
+
+  app.post("/events", (req, res) => {
+    //console.log(req.body);
+    let {name, email, title, description, day, start, end} = req.body;
+    Promise.all([
+      knex('admin')
+        .insert({name: name, email: email})
+        .returning('id')
+        .then(function(id) {
+          knex('event')
+            .insert({name: title, adminId: id[0], description: description})
+            .returning('id')
+            .then(function(id) {
+              if (typeof start === 'string') {
+                knex('date_options')
+                  .insert({date: day, timeStart: `${day} ${start}:00`, timeEnd: `${day} ${end}:00`, eventId: id[0]})
+                  .then(function() {
+                    console.log("inserted")
+                  })
+              }
+              else {
+              for (var i = 1; i < start.length; i++) {
+                knex('date_options')
+                  .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
+                  .then(function() {
+                    console.log("inserted")
+                  })
+                }
+              }
+              })
+          })
+        .catch(function(err) {
+          console.log(err);
+        }),
+    ])
+  })
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
