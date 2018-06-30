@@ -38,7 +38,7 @@ body {
   cursor: pointer;
 }
 
-.login {
+.login, .register {
   background-color: white;
   width: 50%;
   display: block;
@@ -47,6 +47,10 @@ body {
   margin-top: 10px;
   border-radius: 15px;
   padding-left: 10px;
+}
+.login-alert, .register-alert {
+  height: 28px;
+  color: red;
 }
 .bg-modal-signup {
   width: 100%;

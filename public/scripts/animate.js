@@ -1,5 +1,23 @@
 $(document).ready(function() {
 
+$('.loginAlert').on("submit", function(event) {
+  $(".login-alert").text("");
+
+  if ($('.login').val().length === 0) {
+    event.preventDefault();
+    $(".login-alert").append("Invalid credentials")
+  }
+});
+
+$('.registerAlert').on("submit", function(event) {
+  $(".register-alert").text("");
+
+  if ($('.register').val().length === 0) {
+    event.preventDefault();
+    $(".register-alert").append("Please complete form before submitting")
+  }
+});
+
 // Grabs the login button and clicking it opens up the login modal popup.
 const $login = $('.loginButton');
 $login.on('click', function () {
