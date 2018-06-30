@@ -64,13 +64,11 @@ app.post("/events", (req, res) => {
           .insert({name: title, adminId: id[0], description: description})
           .returning('id')
           .then(function(id) {
-            if (start.length === 5) {
+            if (typeof start === 'string') {
               knex('date_options')
                 .insert({date: day, timeStart: `${day} ${start}:00`, timeEnd: `${day} ${end}:00`, eventId: id[0]})
                 .then(function() {
-
-                  console.log(start)
-
+                  console.log("inserted")
                 })
             }
             else {
@@ -78,9 +76,7 @@ app.post("/events", (req, res) => {
               knex('date_options')
                 .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
                 .then(function() {
-
-                  console.log(req.body.start.length)
-
+                  console.log("inserted")
                 })
               }
             }
@@ -89,9 +85,9 @@ app.post("/events", (req, res) => {
       .catch(function(err) {
         console.log(err);
       }),
-
   ])
 })
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

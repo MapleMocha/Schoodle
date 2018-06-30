@@ -64,7 +64,7 @@ $(document).ready(function() {
 
   function appendNewRow() {
 
-    $('.days').append(`<div class='new-div'>${dates}<input type='text' class='start' name='start' style='width: 80px; margin-bottom: 5px'><input type='text' class='end' name='end' style='width: 80px; margin-bottom: 5px'><button class='delete'>delete</button></div>`);
+    $('.days').append(`<div class='new-div'>${dates}<input type='text' autocomplete='off' class='start' name='start' style='width: 80px; margin-bottom: 5px'><input type='text' class='end' autocomplete='off' name='end' style='width: 80px; margin-bottom: 5px'><button class='delete'>delete</button></div>`);
     addStart();
     addEnd();
     $('.delete').on('click', function (event){
