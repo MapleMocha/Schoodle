@@ -357,7 +357,7 @@ app.post("/events", (req, res) => {
                 knex('date_options')
                   .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
                   .then(function() {
-                    console.log("inserted");
+                    console.log(req.body);
                   });
                 }
               }
