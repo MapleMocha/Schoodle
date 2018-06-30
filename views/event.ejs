@@ -29,6 +29,8 @@
     <div>
       <h2 id='invite-link'>http://localhost:8080/event/<%-uniqueUrl%><i class="far fa-copy"></i><h2>
       <!-- image to click to autocopy -->
+
+      <h3 ><%-`${eventId}`%></h3>
     </div>
 <br />
 <br />
@@ -39,14 +41,6 @@
                 <thead>
 
                 <tr>
-                  <%# for each date_options in event -need to find the  length
-
-                      SELECT COUNT(*)
-                        FROM event
-                        JOIN date_options
-                        ON event.id = date_options.eventid
-                        WHERE event.id = (current...)
-                        { %>
                   <th class='user-column'> Voter: </th>
 
                   <% for(let i = 0; i < columnCount; i++) { %>
@@ -57,7 +51,6 @@
               </thead>
               <tbody>
                 <% for(let i = 0; i < users.length; i++){ %>
-
 
                   <tr>
                     <td class='user-column'> <%-`${users[i][0]}`%> </td>
@@ -73,14 +66,15 @@
                 <% } %>
                 <tr class='new-user'>
                   <td class='name'>
-                    <form>
                       <input class='usernameInput' type='username' placeholder='Your name'/>
                       <input class='emailInput'type='email' placeholder='myEmail@Nielemma.com'/>
-                    </form>
                   </td>
 
                   <% for(let i = 0; i < columnCount; i++) { %>
-                        <td><button class='btn-choice'>choose</button></td>
+                        <td>
+                          <p><%-allDateOptionIds[i]%></p>
+                          <button class='btn-choice'>choose</button>
+                        </td>
                    <% }  %>
 
                 </tr>
@@ -88,7 +82,10 @@
 
               </tbody>
               </table>
-              <button id = 'vote'>Vote!</button>
+              <%# <form method='POST' action='/events/:id'> %>
+                <button type='submit' id = 'vote'>Vote!</button>
+              <%# </form> %>
+
             </div>
 
             <%#  for"submited" <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>

@@ -6,6 +6,7 @@ $(document).ready(function() {
   const $submitChoices = $('#vote')
   let clicked = false;
   const $rowToSubmit = $('.new-user .name')
+  let chosen = [];
 
   $('#vote').on('click', (event) => {
 
@@ -15,19 +16,51 @@ $(document).ready(function() {
       clicked = true;
 
 
-      const $username = $('.new-user .name .usernameInput')
+      let $username = $('.new-user .name .usernameInput')
+      let $email = $('.new-user .name .emailInput')
 
-      const $usernameSubmission = $(`<td class='user-column'>${$username.val()}</td>`)
+      const submitChoice = function(){
+        let $usernameSubmission = $(`<td class='user-column'>${$username.val()}</td>`)
 
-      $rowToSubmit.replaceWith($usernameSubmission);
+        $rowToSubmit.replaceWith($usernameSubmission);
 
-      const $yesBlocks = $('.new-user .check')
-      $yesBlocks.parent().addClass('check')
-      $yesBlocks.replaceWith(`<i class="fas fa-check-circle fa-2x"></i>`)
+        let $yesBlocks = $('.new-user .check')
+        $yesBlocks.parent().addClass('check')
+        // $yesBlocks.siblings().addClass('chosen')
+        // chosen = $('.chosen').toArray();
+        $yesBlocks.replaceWith(`<i class="fas fa-check-circle fa-2x"></i>`)
 
-      const $noBlocks = $('.new-user .btn-choice')
-      $noBlocks.parent().addClass('ex')
-      $noBlocks.replaceWith(`<i class="far fa-times-circle fa-2x"></i>`)
+        let $noBlocks = $('.new-user .btn-choice')
+        $noBlocks.parent().addClass('ex')
+        $noBlocks.replaceWith(`<i class="far fa-times-circle fa-2x"></i>`)
+      }
+      submitChoice();
+
+
+      console.log(chosen)
+      console.log($email.html());
+      // const $('emailInput')
+
+      let newUser = {
+        name: $username.val(),
+        email: $email.val(),
+        eventId: $('h3').html(),
+        dateOptionsId: chosen
+      }
+
+      console.log(newUser)
+      $.ajax({
+        url: '/events/:id',
+        method: 'POST',
+        data: newUser,
+        success: function (poll) {
+          console.log('success')
+        },
+        error: function(err){
+          console.log('error: ', err)
+        }
+
+      });
 
     } else {
 
@@ -56,8 +89,8 @@ $(document).ready(function() {
 
   $('.btn-choice').on('click', (event) => {
     console.log('attempt')
-    const $check = $(`<i class="fas fa-check-circle fa-2x"></i>`)
-    const $tableSpot = $(event.currentTarget);
+    let $check = $(`<i class="fas fa-check-circle fa-2x"></i>`)
+    let $tableSpot = $(event.currentTarget);
     if ($tableSpot.hasClass('check')){
       $tableSpot.empty()
       .addClass('btn-choice')
@@ -67,6 +100,10 @@ $(document).ready(function() {
       $tableSpot.empty()
       .addClass('check btn-choice')
       .append($check);
+
+      let $dateId = $tableSpot.siblings().addClass('.chosen')
+      chosen.push($dateId.html());
+      console.log('inside: ',chosen)
     }
 
   });

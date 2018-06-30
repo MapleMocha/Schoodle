@@ -60,6 +60,7 @@ app.get("/events/:id", (req, res) => {
        userChoices: [],
        allDateOptionIds: [],
        currentUser: '',
+       eventId: 1,
        // userObject: req.session.user_id,
 
      };
@@ -152,6 +153,60 @@ app.get("/events/:id", (req, res) => {
   })
 
 });
+
+app.post('/events/:id', (req, res) => {
+  // console.log(req.body)
+  // let uniqueId = req.params.id,
+  let name = req.body.name;
+  let email = req.body.email;
+  let eventId = req.body.eventId;
+  let currDateOptionsIds = req.body.dateOptionsId;
+  console.log("\n\n\n\nARRAY: ", currDateOptionsIds)
+  let newId;
+
+  // Promise.all([
+
+    //
+    knex('users').insert({name: name, email: email, eventId: eventId})
+                 .returning('id')
+                 .then(function(id){
+
+
+                   newId = id;
+                   var extra = []
+
+                   for(let i = 0; i < currDateOptionsIds.length; i++){
+
+                     extra.push(knex('usersDateOptions').insert({
+                                                            dateOptionsId: Number(currDateOptionsIds[i]),
+                                                            usersId:newId[0]
+                                                          }))
+
+
+                    }
+                    return Promise.all(extra)
+                  })
+
+                 .then(function () {
+                   res.redirect('/events/:id')
+                 })
+
+    // knex.where({
+    //         usersId: 1,
+    //     })
+    //     .select('dateOptionsId')
+    //     .from('usersDateOptions')
+    //     .then(function(results) {
+    //
+    //      })
+
+
+  // ]).then( function() {
+  //
+       // res.redirect('/events/:id')
+     })
+
+// })
 
 
     //helper function to put times in 12 hour clock and format
