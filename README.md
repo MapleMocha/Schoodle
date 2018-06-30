@@ -4,6 +4,12 @@ Schoodle is a web application which allows the users to decide on which date to 
 
 Developped by Emma Skillings, Eliza Moore and Nicholas Lepage 
 
+## Screenshots
+
+![alt text](https://github.com/NicholasLepage/Schoodle/blob/master/public/resources/LandingPageLoggedIn.png)
+![alt text](https://github.com/NicholasLepage/Schoodle/blob/master/public/resources/CreateEvent.png)
+![alt text](https://github.com/NicholasLepage/Schoodle/blob/master/public/resources/UserVote.png)
+
 ## Getting Started
 
 1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
