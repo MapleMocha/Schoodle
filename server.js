@@ -60,7 +60,7 @@ app.get("/events/:id", (req, res) => {
        userChoices: [],
        allDateOptionIds: [],
        currentUser: '',
-       eventId: 1,
+       // eventId: req.body.eventId,
        // userObject: req.session.user_id,
 
      };
@@ -77,6 +77,7 @@ app.get("/events/:id", (req, res) => {
 
           templateVars['columnCount'] = result[0].count;
         }),
+
 
     //get the specific dates for each option
     knex.where({

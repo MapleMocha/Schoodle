@@ -2,6 +2,20 @@
 $(document).ready(function() {
 
 
+
+  //helper function to create warning message if username and email not submitted properly
+  function warning(message) {
+    const $newMessage = $(`<p class='warning'>${message}</p>`)
+    $newMessage.appendTo($('.warningMessage')).fadeOut(4500);
+  }
+
+  //escape function to uses on new tweet text area to prevent cross-site scripting attacks
+  // function escape(str) {
+  //   var div = document.createElement('div');
+  //   div.appendChild(document.createTextNode(str));
+  //   return div.innerHTML;
+  // }
+
   const $submitChoices = $('#vote')
   let clicked = false;
   const $rowToSubmit = $('.new-user .name')
@@ -57,8 +71,12 @@ $(document).ready(function() {
             }
 
           });
+      } else if((!$email.val()) && $username.val()){
+        warning('Need to enter an email :)')
+      } else if($email.val() && (!$username.val())){
+        warning('Need to enter a username :)')
       } else {
-        alert('Need to enter a username and email :)')
+        warning('Need to enter an email and username :)')
       }
 
     } else {
