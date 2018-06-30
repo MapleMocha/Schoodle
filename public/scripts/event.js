@@ -9,12 +9,6 @@ $(document).ready(function() {
     $newMessage.appendTo($('.warningMessage')).fadeOut(4500);
   }
 
-  //escape function to uses on new tweet text area to prevent cross-site scripting attacks
-  // function escape(str) {
-  //   var div = document.createElement('div');
-  //   div.appendChild(document.createTextNode(str));
-  //   return div.innerHTML;
-  // }
 
   const $submitChoices = $('#vote')
   let clicked = false;

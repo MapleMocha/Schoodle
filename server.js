@@ -79,6 +79,7 @@ app.get("/events/:id", (req, res) => {
        users:[],
        userChoices: [],
        allDateOptionIds: [],
+       eventDescript: [],
        // currentUser: '',
        // eventId: '',
        // eventId: req.body.eventId,
@@ -90,92 +91,92 @@ app.get("/events/:id", (req, res) => {
    knex.where({
      uniqueURL: req.params.id,
    })
-   .select('id')
+   .select('*')
    .from('event')
-   .returning('id')
-   .then(function (id){
-     currEvent = id[0].id;
+   .then(function (results){
+     currEvent = results[0].id;
      templateVars['eventId'] = currEvent;
+     templateVars['eventDescript'].push(results[0].description);
 
-  Promise.all([
+    Promise.all([
 
-    //find how many date options there were for the selected event
-    knex.where({
-          eventId: currEvent,
-        })
-        .count('*')
-        .from('date_options')
-        .then(function(result) {
-          templateVars['columnCount'] = result[0].count;
-        })
-        .catch(function(err) {
-          console.log(err);
-        }),
-
-    //get the specific dates for each option
-    knex.where({
-          eventId: currEvent,
-        })
-        .select('*')
-        .from('date_options')
-        .then(function(result) {
-           for(let i in result){
-             let date = String(result[i].date);
-             templateVars['dayName'].push(date.slice(0,3)); //dayName
-             templateVars['dayNum'].push(date.slice(8,10)); //dayNum
-             templateVars['month'].push(date.slice(4,7)); //month
-             templateVars['year'].push(date.slice(11,15)); //year
-
-             let startTime = formatTime(result[i].timeStart);
-             templateVars['startTime'].push(startTime); //startTime
-
-             let endTime = formatTime(result[i].timeEnd);
-             templateVars['endTime'].push(endTime); //endTime
-
-             templateVars['allDateOptionIds'].push(result[i].id);
-           }
-        }),
-
-     //get the users that have responded to the selected event
-     knex.where({
+      //find how many date options there were for the selected event
+      knex.where({
             eventId: currEvent,
-         })
-         .select('*')
-         .from('users')
-         .then(function(result) {
+          })
+          .count('*')
+          .from('date_options')
+          .then(function(result) {
+            templateVars['columnCount'] = result[0].count;
+          })
+          .catch(function(err) {
+            console.log(err);
+          }),
 
-             let extra = [];
-
+      //get the specific dates for each option
+      knex.where({
+            eventId: currEvent,
+          })
+          .select('*')
+          .from('date_options')
+          .then(function(result) {
              for(let i in result){
-               let userName = result[i].name;
-               let userEmail = result[i].email;
-               let id = result[i].id;
-               templateVars['users'].push([userName, userEmail, id, []]);
+               let date = String(result[i].date);
+               templateVars['dayName'].push(date.slice(0,3)); //dayName
+               templateVars['dayNum'].push(date.slice(8,10)); //dayNum
+               templateVars['month'].push(date.slice(4,7)); //month
+               templateVars['year'].push(date.slice(11,15)); //year
 
-               //get each user's selected date_options
-               extra.push(knex.where({
-                      usersId: id,
-                      eventId: currEvent,
-                   })
-                   .select('*')
-                   .from('usersDateOptions')
-                   .innerJoin('date_options', 'usersDateOptions.dateOptionsId', 'date_options.id')
-                   .then(function(result) {
+               let startTime = formatTime(result[i].timeStart);
+               templateVars['startTime'].push(startTime); //startTime
 
-                     for(let j in result){
-                       templateVars['users'][i][3].push(result[j].dateOptionsId);
-                     }
-                   }));
-           }
-           return Promise.all(extra);
-         }),
+               let endTime = formatTime(result[i].timeEnd);
+               templateVars['endTime'].push(endTime); //endTime
+
+               templateVars['allDateOptionIds'].push(result[i].id);
+             }
+          }),
+
+       //get the users that have responded to the selected event
+       knex.where({
+              eventId: currEvent,
+           })
+           .select('*')
+           .from('users')
+           .then(function(result) {
+
+               let extra = [];
+
+               for(let i in result){
+                 let userName = result[i].name;
+                 let userEmail = result[i].email;
+                 let id = result[i].id;
+                 templateVars['users'].push([userName, userEmail, id, []]);
+
+                 //get each user's selected date_options
+                 extra.push(knex.where({
+                        usersId: id,
+                        eventId: currEvent,
+                     })
+                     .select('*')
+                     .from('usersDateOptions')
+                     .innerJoin('date_options', 'usersDateOptions.dateOptionsId', 'date_options.id')
+                     .then(function(result) {
+
+                       for(let j in result){
+                         templateVars['users'][i][3].push(result[j].dateOptionsId);
+                       }
+                     }));
+             }
+             return Promise.all(extra);
+           }),
 
 
-    ]).then(function(result) {
+      ]).then(function(result) {
 
-      res.render("event", templateVars);
+        res.render("event", templateVars);
 
-    });
+      });
   });
 });
 
