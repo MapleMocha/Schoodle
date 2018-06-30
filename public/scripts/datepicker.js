@@ -4,20 +4,20 @@ $(document).ready(function() {
   let dates = [];
 
   function addDate(date) {
-      if ($.inArray(date, dates) < 0)
+      // if ($.inArray(date, dates) < 0)
           dates.push(date);
   }
 
-  function removeDate(index) {
-      dates.splice(index, 1);
-  }
+  // function removeDate(index) {
+  //     dates.splice(index, 1);
+  // }
 
   // Adds a date if we don't have it yet, else remove it
   function addOrRemoveDate(date) {
-      var index = $.inArray(date, dates);
-      if (index >= 0)
-          removeDate(index);
-      else
+      // var index = $.inArray(date, dates);
+      // if (index >= 0)
+      //     removeDate(index);
+      // else
           addDate(date);
 
   }
@@ -39,7 +39,6 @@ $(document).ready(function() {
           onSelect: function (dateText, inst) {
               addOrRemoveDate(dateText);
               appendNewRow();
-              dates = [];
           },
           beforeShowDay: function (date) {
               var year = date.getFullYear();
@@ -62,16 +61,26 @@ $(document).ready(function() {
 
   });
 
+
+
   // appends new date row to Dates/Times section on Create page
   function appendNewRow() {
-    $('.days').append(`<div class='new-div'><p class='dates-list'>${dates}</p><input type='text' autocomplete='off' class='start' name='start' style='width: 80px; margin-bottom: 5px'><input type='text' class='end' autocomplete='off' name='end' style='width: 80px; margin-bottom: 5px'><button class='delete'>delete</button></div>`);
-    addStart();
-    addEnd();
+    for (var i = 0; i < dates.length; i++) {
+      if (i === dates.length - 1) {
+        $('.days').append(`<div class='new-div'><p class='dates-list'>${dates}</p><input type='text' autocomplete='off' class='start' name='start' style='width: 80px; margin-bottom: 5px'><input type='text' class='end' autocomplete='off' name='end' style='width: 80px; margin-bottom: 5px'><button class='delete'>delete</button></div>`);
+        addStart();
+        addEnd();
+      }
+    }
     $('.delete').on('click', function (event){
       $(event.target).parent().remove();
     })
   }
 
+  // $('.button').on('submit', function (event) {
+  //   $('.daysArray').append(`<input name="dateArray">${dates}</input>`);
+  //   console.log(dates['0']);
+  // })
 
   // adds start time text box
   function addStart() {

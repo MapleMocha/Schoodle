@@ -254,9 +254,7 @@ app.post("/login", (req, res) => {
     .select('*')
     .from('admin')
     .then(function(result){
-      if (result == false) {
-        res.sendStatus(400);
-      }
+      console.log(result, "+++++++++++++++++++++++++++++++++")
       bcrypt.compare(passwordSubmitted, result[0].password)
       .then(function(resu) {
         if (resu == false) {
@@ -342,6 +340,7 @@ app.post("/events", (req, res) => {
   knex.select('id').from('admin').where('id', req.session.user_id).then(function(result) {
     existingAdminID = result[0].id;
     let {name, email, title, description, day, start, end} = req.body;
+    console.log(day);
     Promise.all([
           knex('event')
             .insert({name: title, adminId: existingAdminID, description: description, uniqueURL:uniqueUrl})
@@ -357,7 +356,7 @@ app.post("/events", (req, res) => {
               else {
               for (var i = 0; i < start.length; i++) {
                 knex('date_options')
-                  .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
+                  .insert({date: day[i], timeStart: `${day[i]} ${start[i]}:00`, timeEnd: `${day[i]} ${end[i]}:00`, eventId: id[0]})
                   .then(function() {
                     console.log(req.body);
                   });
