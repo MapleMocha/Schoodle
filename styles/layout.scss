@@ -23,7 +23,16 @@ nav {
   margin: auto;
   text-align: center;
   color: #323947;
+  h1 {
+    margin-top: 10%;
+    font-size: 50px;
+  }
+  #slogan {
+    font-size: 20px;
+  }
   .button{
+    font-size: 30px;
+    margin-top: 30px;
     background-color: #323947;
     border: 1px solid #323947;
     color: #f6e474;
