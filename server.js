@@ -44,6 +44,11 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+// app.get("/events/mid/:id", (req, res) => {
+//   const uniqueUrl = req.params.id;
+//   res.render(`events/${uniqueUrl}`);
+// });
+
 // Event page
 app.get("/events/:id", (req, res) => {
 
@@ -60,30 +65,45 @@ app.get("/events/:id", (req, res) => {
        users:[],
        userChoices: [],
        allDateOptionIds: [],
-       currentUser: '',
-       eventId: '',
+       // currentUser: '',
+       // eventId: '',
        // eventId: req.body.eventId,
        // userObject: req.session.user_id,
 
      };
+   let currEvent;
+
+   knex.where({
+     uniqueURL: req.params.id,
+   })
+   .select('id')
+   .from('event')
+   .returning('id')
+   .then(function (id){
+     currEvent = id[0].id;
+     templateVars['eventId'] = currEvent;
+     console.log("\n\n\n\nCURRENT EVENT ID: ", currEvent);
+
 
   Promise.all([
 
     //find how many date options there were for the selected event
     knex.where({
-        eventId: 1,
+          eventId: currEvent,
         })
         .count('*')
         .from('date_options')
         .then(function(result) {
-
           templateVars['columnCount'] = result[0].count;
+        })
+        .catch(function(err) {
+          console.log(err);
         }),
 
 
     //get the specific dates for each option
     knex.where({
-          eventId: 1,
+          eventId: currEvent,
         })
         .select('*')
         .from('date_options')
@@ -109,7 +129,7 @@ app.get("/events/:id", (req, res) => {
 
      //get the users that have responded to the selected event
      knex.where({
-            eventId: 1,
+            eventId: currEvent,
          })
          .select('*')
          .from('users')
@@ -126,7 +146,7 @@ app.get("/events/:id", (req, res) => {
                //get each user's selected date_options
                extra.push(knex.where({
                       usersId: id,
-                      eventId: '1',
+                      eventId: currEvent,
                    })
                    .select('*')
                    .from('usersDateOptions')
@@ -146,15 +166,17 @@ app.get("/events/:id", (req, res) => {
          }),
 
 
-  ]).then(function(result) {
+    ]).then(function(result) {
 
-    res.render("event", templateVars);
+      res.render("event", templateVars);
 
-  })
+    })
+  });
 
 });
 
 app.post('/events/:id', (req, res) => {
+  console.log("HERE\n\n\n\n\n\n")
 
   let name = req.body.name;
   let email = req.body.email;
@@ -163,7 +185,7 @@ app.post('/events/:id', (req, res) => {
   let newId;
 
 
-    knex('users').insert({name: name, email: email, eventId: eventId})
+  knex('users').insert({name: name, email: email, eventId: eventId})
                  .returning('id')
                  .then(function(id){
 
@@ -207,7 +229,7 @@ const formatTime = function(timeObject){
 
   // Create page
 
-  app.get("/events/new", (req, res) => {
+  app.get("/events", (req, res) => {
     res.render("create");
   });
 
@@ -215,6 +237,11 @@ const formatTime = function(timeObject){
 
   app.post("/events", (req, res) => {
     //console.log(req.body);
+    const generateShortUrl = function(){
+      const uniqueKey = Math.random().toString(36).replace('0.','').split('').slice(0,12).join('');
+      return uniqueKey;
+    }
+    let uniqueUrl = generateShortUrl();
     let {name, email, title, description, day, start, end} = req.body;
     Promise.all([
       knex('admin')
@@ -222,7 +249,7 @@ const formatTime = function(timeObject){
         .returning('id')
         .then(function(id) {
           knex('event')
-            .insert({name: title, adminId: id[0], description: description})
+            .insert({name: title, adminId: id[0], description: description, uniqueURL:uniqueUrl})
             .returning('id')
             .then(function(id) {
               if (typeof start === 'string') {
@@ -233,7 +260,7 @@ const formatTime = function(timeObject){
                   })
               }
               else {
-              for (var i = 1; i < start.length; i++) {
+              for (var i = 0; i < start.length; i++) {
                 knex('date_options')
                   .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
                   .then(function() {
@@ -246,8 +273,10 @@ const formatTime = function(timeObject){
         .catch(function(err) {
           console.log(err);
         }),
-    ])
-  })
+    ]).then(function() {
+      res.redirect(`events/${uniqueUrl}`)
+    })
+  });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
