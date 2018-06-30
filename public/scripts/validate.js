@@ -1,6 +1,8 @@
 
 $(document).ready(function() {
 
+  // assures all fields in Create Form are filled out before posting to db and redirecting to event page
+
   $("form").on("submit", function(event) {
 
     $(".name-alert").text("");

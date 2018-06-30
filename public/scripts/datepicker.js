@@ -62,9 +62,8 @@ $(document).ready(function() {
 
   });
 
-
+  // appends new date row to Dates/Times section on Create page
   function appendNewRow() {
-
     $('.days').append(`<div class='new-div'>${dates}<input type='text' autocomplete='off' class='start' name='start' style='width: 80px; margin-bottom: 5px'><input type='text' class='end' autocomplete='off' name='end' style='width: 80px; margin-bottom: 5px'><button class='delete'>delete</button></div>`);
     addStart();
     addEnd();
@@ -75,7 +74,7 @@ $(document).ready(function() {
   }
 
 
-
+  // adds start time text box
   function addStart() {
     $('.start').timepicker({
       'timeFormat': 'HH:mm',
@@ -84,6 +83,7 @@ $(document).ready(function() {
     });
   }
 
+  // adds end time text box
   function addEnd() {
     $('.end').timepicker({
       'timeFormat': 'HH:mm',
@@ -91,9 +91,5 @@ $(document).ready(function() {
       'maxTime': '22:00'
     });
   }
-
-  // function delete() {
-  //   $('.delete').append("<input type='input' class='remove' name='delete'>")
-  // }
 
 });
