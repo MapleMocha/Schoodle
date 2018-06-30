@@ -254,6 +254,7 @@ app.post("/login", (req, res) => {
     .select('*')
     .from('admin')
     .then(function(result){
+      console.log(result, "+++++++++++++++++++++++++++++++++")
       bcrypt.compare(passwordSubmitted, result[0].password)
       .then(function(resu) {
         if (resu == false) {
@@ -276,13 +277,12 @@ app.post("/register", (req, res) => {
   const emailSubmitted = req.body.email;
 
     // Makes sure all fields are filled
-    if (fullNameSubmitted === '' || emailSubmitted === '' || req.body.password === '') {
+    if (fullNameSubmitted  === '' || emailSubmitted === '' || req.body.password === '') {
       res.sendStatus(400);
-    }
+    } else {
 
-    // Stores the new hashed password in a variable
+  // Stores the new hashed password in a variable
   const hashedPass = bcrypt.hashSync(req.body.password, 10);
-
 
   knex.where({
     'email': emailSubmitted
@@ -306,6 +306,7 @@ app.post("/register", (req, res) => {
         res.sendStatus(400);
       }
     });
+  }
 });
 
 
