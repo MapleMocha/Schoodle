@@ -28,11 +28,10 @@
     <div class="navbar-header">
       <a class="navbar-brand" href="/" style="color:#323947">Schoodle </a>
       <a href="/"><img id="logo-icon" src="/resources/SchoodleIconTransparent.png"></a>
-      <!-- <img class="chickin" src="/resources/chickin.png"> -->
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
 
+    <!-- If the user is NOT logged in, show the sign up and login buttons, if they are, hide the buttons and show a logout button-->
     <% if (userObject == undefined) { %>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -42,7 +41,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a class="btn btn-default loginButton">Login</a></li>
       </ul>
-    </div><!-- /.navbar-collapse -->
+    </div>
 
     <% } else { %>
 
@@ -50,9 +49,6 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
           <a class="btn btn-default logoutButton"><img src="/resources/logout.png" id="logoutIcon">Logout</a>
-<!--           <form method="POST" action="/logout">
-            <input type="submit" class="btn btn-default" id="logoutButton" value="Log Out">
-          </form> -->
         </li>
       </ul>
     </div>
@@ -61,10 +57,10 @@
 
     <% } %>
 
-  </div><!-- /.container-fluid -->
+  </div>
 </nav>
 
-
+<!-- Modal popup for logging in -->
 <div class="bg-modal-login">
   <div class="modal-content-login">
     <div class="close">+</div>
@@ -77,6 +73,7 @@
   </div>
 </div>
 
+<!-- Modal popup for signing up -->
 <div class="bg-modal-signup">
   <div class="modal-content-signup">
     <div class="close">+</div>

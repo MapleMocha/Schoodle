@@ -1,3 +1,4 @@
+//jshint esversion: 6
 "use strict";
 
 require('dotenv').config();
@@ -29,6 +30,7 @@ app.use(morgan('dev'));
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
 
+// Settings for the session
 app.use(cookieSession({
   name: 'session',
   keys: ["big boi with big secrets"],
@@ -50,12 +52,12 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 
 // Home page
-
 app.get("/", (req, res) => {
   let templateVars = {userObject: req.session.user_id};
   res.render("index", templateVars);
 });
 
+// Create new event page
 app.get("/events/new", (req, res) => {
   let templateVars = {userObject: req.session.user_id};
   res.render("create", templateVars);
@@ -94,8 +96,6 @@ app.get("/events/:id", (req, res) => {
    .then(function (id){
      currEvent = id[0].id;
      templateVars['eventId'] = currEvent;
-     console.log("\n\n\n\nCURRENT EVENT ID: ", currEvent);
-
 
   Promise.all([
 
@@ -112,7 +112,6 @@ app.get("/events/:id", (req, res) => {
           console.log(err);
         }),
 
-
     //get the specific dates for each option
     knex.where({
           eventId: currEvent,
@@ -121,7 +120,7 @@ app.get("/events/:id", (req, res) => {
         .from('date_options')
         .then(function(result) {
            for(let i in result){
-             let date = String(result[i].date)
+             let date = String(result[i].date);
              templateVars['dayName'].push(date.slice(0,3)); //dayName
              templateVars['dayNum'].push(date.slice(8,10)); //dayNum
              templateVars['month'].push(date.slice(4,7)); //month
@@ -134,10 +133,8 @@ app.get("/events/:id", (req, res) => {
              templateVars['endTime'].push(endTime); //endTime
 
              templateVars['allDateOptionIds'].push(result[i].id);
-
            }
         }),
-
 
      //get the users that have responded to the selected event
      knex.where({
@@ -168,13 +165,9 @@ app.get("/events/:id", (req, res) => {
                      for(let j in result){
                        templateVars['users'][i][3].push(result[j].dateOptionsId);
                      }
-
-
                    }));
-
            }
-
-           return Promise.all(extra)
+           return Promise.all(extra);
          }),
 
 
@@ -182,13 +175,11 @@ app.get("/events/:id", (req, res) => {
 
       res.render("event", templateVars);
 
-    })
+    });
   });
-
 });
 
 app.post('/events/:id', (req, res) => {
-  console.log("HERE\n\n\n\n\n\n")
 
   let name = req.body.name;
   let email = req.body.email;
@@ -203,38 +194,38 @@ app.post('/events/:id', (req, res) => {
 
 
                    newId = id;
-                   var extra = []
+                   var extra = [];
 
                    for(let i = 0; i < currDateOptionsIds.length; i++){
 
                      extra.push(knex('usersDateOptions').insert({
                                                             dateOptionsId: Number(currDateOptionsIds[i]),
                                                             usersId:newId[0]
-                                                          }))
+                                                          }));
 
 
                     }
-                    return Promise.all(extra)
+                    return Promise.all(extra);
                   })
 
                  .then(function () {
-                   res.redirect('/events/:id')
-                 })
-})
+                   res.redirect('/events/:id');
+                 });
+});
 
-//Logs out the User by clearing the session
+// Logs out the User by clearing the session
 app.post("/logout", (req,res) => {
-
   req.session = null;
   res.redirect("/");
 });
 
-//Logs in the User
+// Logs in the User
 app.post("/login", (req, res) => {
 
   const emailSubmitted = req.body.email;
   const passwordSubmitted = req.body.password;
 
+  // Checks if the credentials match an email and password in the database.
   knex.where({
     'email': emailSubmitted,
     })
@@ -254,17 +245,20 @@ app.post("/login", (req, res) => {
 
 
 
-//Registers a new user
+// Registers a new user
 app.post("/register", (req, res) => {
 
   const fullNameSubmitted = req.body.name;
   const emailSubmitted = req.body.email;
 
+    // Makes sure all fields are filled
     if (fullNameSubmitted === '' || emailSubmitted === '' || req.body.password === '') {
       res.sendStatus(400);
     }
 
+    // Stores the new hashed password in a variable
   const hashedPass = bcrypt.hashSync(req.body.password, 10);
+
 
   knex.where({
     'email': emailSubmitted
@@ -273,6 +267,7 @@ app.post("/register", (req, res) => {
     .from('admin')
     .then(function (result) {
 
+      // If the email isn't already in the database. If it isn't register the user and logs him in.
       if (result == false) {
         knex('admin')
           .insert({name: fullNameSubmitted, email: emailSubmitted, password: hashedPass})
@@ -287,14 +282,11 @@ app.post("/register", (req, res) => {
       } else {
         res.sendStatus(400);
       }
-
     });
-
 });
 
 
-    //helper function to put times in 12 hour clock and format
-    //
+// Helper function to put times in 12 hour clock and format
 const formatTime = function(timeObject){
     let newTime = String(timeObject).slice(16,21);
     let temp = Number(newTime.slice(0,2));
@@ -306,58 +298,55 @@ const formatTime = function(timeObject){
     } else{
       return newTime+'am';
     }
-  }
+  };
 
-  // Create page
+// Create page
+app.get("/events", (req, res) => {
+  res.render("create");
+});
 
-  app.get("/events", (req, res) => {
-    res.render("create");
-  });
-
-  // Post to Event page
-
-  app.post("/events", (req, res) => {
-    //console.log(req.body);
-    const generateShortUrl = function(){
-      const uniqueKey = Math.random().toString(36).replace('0.','').split('').slice(0,12).join('');
-      return uniqueKey;
-    }
-    let uniqueUrl = generateShortUrl();
-    let {name, email, title, description, day, start, end} = req.body;
-    Promise.all([
-      knex('admin')
-        .insert({name: name, email: email})
-        .returning('id')
-        .then(function(id) {
-          knex('event')
-            .insert({name: title, adminId: id[0], description: description, uniqueURL:uniqueUrl})
-            .returning('id')
-            .then(function(id) {
-              if (typeof start === 'string') {
-                knex('date_options')
-                  .insert({date: day, timeStart: `${day} ${start}:00`, timeEnd: `${day} ${end}:00`, eventId: id[0]})
-                  .then(function() {
-                    console.log("inserted")
-                  })
+// Post to Event page
+app.post("/events", (req, res) => {
+  const generateShortUrl = function(){
+    const uniqueKey = Math.random().toString(36).replace('0.','').split('').slice(0,12).join('');
+    return uniqueKey;
+  };
+  let uniqueUrl = generateShortUrl();
+  let {name, email, title, description, day, start, end} = req.body;
+  Promise.all([
+    knex('admin')
+      .insert({name: name, email: email})
+      .returning('id')
+      .then(function(id) {
+        knex('event')
+          .insert({name: title, adminId: id[0], description: description, uniqueURL:uniqueUrl})
+          .returning('id')
+          .then(function(id) {
+            if (typeof start === 'string') {
+              knex('date_options')
+                .insert({date: day, timeStart: `${day} ${start}:00`, timeEnd: `${day} ${end}:00`, eventId: id[0]})
+                .then(function() {
+                  console.log("inserted");
+                });
+            }
+            else {
+            for (var i = 0; i < start.length; i++) {
+              knex('date_options')
+                .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
+                .then(function() {
+                  console.log("inserted");
+                });
               }
-              else {
-              for (var i = 0; i < start.length; i++) {
-                knex('date_options')
-                  .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
-                  .then(function() {
-                    console.log("inserted")
-                  })
-                }
-              }
-              })
-          })
-        .catch(function(err) {
-          console.log(err);
-        }),
-    ]).then(function() {
-      setTimeout(function() {res.redirect(`events/${uniqueUrl}`)}, 500)
-    })
+            }
+          });
+        })
+      .catch(function(err) {
+        console.log(err);
+      }),
+  ]).then(function() {
+    setTimeout(function() {res.redirect(`events/${uniqueUrl}`)}, 500);
   });
+});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
