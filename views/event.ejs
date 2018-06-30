@@ -30,14 +30,15 @@
       <h2 id='invite-link'>http://localhost:8080/event/<%-uniqueUrl%><i class="far fa-copy"></i><h2>
       <!-- image to click to autocopy -->
 
-      <h3 ><%-`${eventId}`%></h3>
+      <h3 class='ids'><%-`${eventId}`%></h3>
+      <h3>{Event description will go here}</h3>
     </div>
 <br />
 <br />
 <br />
 <br />
             <div>
-              <table class='table'>
+              <table>
                 <thead>
 
                 <tr>
@@ -72,7 +73,7 @@
 
                   <% for(let i = 0; i < columnCount; i++) { %>
                         <td>
-                          <p><%-allDateOptionIds[i]%></p>
+                          <p class='ids'><%-allDateOptionIds[i]%></p>
                           <button class='btn-choice'>choose</button>
                         </td>
                    <% }  %>

@@ -111,7 +111,7 @@ app.get("/events/:id", (req, res) => {
          .select('*')
          .from('users')
          .then(function(result) {
-           // console.log(result)
+
              let extra = [];
 
              for(let i in result){
@@ -129,14 +129,11 @@ app.get("/events/:id", (req, res) => {
                    .from('usersDateOptions')
                    .innerJoin('date_options', 'usersDateOptions.dateOptionsId', 'date_options.id')
                    .then(function(result) {
-                     // console.log("results", result);
 
                      for(let j in result){
-                       console.log(result[j].dateOptionsId)
                        templateVars['users'][i][3].push(result[j].dateOptionsId);
                      }
 
-                     console.log('user:',templateVars['users'][i])
 
                    }));
 
@@ -155,18 +152,14 @@ app.get("/events/:id", (req, res) => {
 });
 
 app.post('/events/:id', (req, res) => {
-  // console.log(req.body)
-  // let uniqueId = req.params.id,
+
   let name = req.body.name;
   let email = req.body.email;
   let eventId = req.body.eventId;
   let currDateOptionsIds = req.body.dateOptionsId;
-  console.log("\n\n\n\nARRAY: ", currDateOptionsIds)
   let newId;
 
-  // Promise.all([
 
-    //
     knex('users').insert({name: name, email: email, eventId: eventId})
                  .returning('id')
                  .then(function(id){
@@ -190,23 +183,8 @@ app.post('/events/:id', (req, res) => {
                  .then(function () {
                    res.redirect('/events/:id')
                  })
+})
 
-    // knex.where({
-    //         usersId: 1,
-    //     })
-    //     .select('dateOptionsId')
-    //     .from('usersDateOptions')
-    //     .then(function(results) {
-    //
-    //      })
-
-
-  // ]).then( function() {
-  //
-       // res.redirect('/events/:id')
-     })
-
-// })
 
 
     //helper function to put times in 12 hour clock and format
