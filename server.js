@@ -238,6 +238,8 @@ app.post("/login", (req, res) => {
         if (resu == false) {
           res.sendStatus(400);
         }
+
+
         req.session.user_id = result[0].id;
         res.redirect("/");
       });
@@ -274,8 +276,7 @@ app.post("/register", (req, res) => {
           .insert({name: fullNameSubmitted, email: emailSubmitted, password: hashedPass})
           .returning('id')
           .then(function(id) {
-
-            req.session.user_id = id;
+            req.session.user_id = id[0];
 
             res.redirect("/");
 
