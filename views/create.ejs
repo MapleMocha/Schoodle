@@ -33,9 +33,9 @@
 
   </head>
 
-  <body>
+ <body>
 
-<nav class="navbar navbar-default">
+    <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -44,9 +44,8 @@
       <!-- <img class="chickin" src="/resources/chickin.png"> -->
     </div>
   </div>
-</nav>
-
-    <form action="/events" method="POST" class="formCSS">
+  </nav>
+    <form action="/events" method="POST">
     <main class="container">
       <section class="alert">
         <p class="name-alert"></p>
@@ -65,13 +64,14 @@
           <button type="submit" class="button">create</button>
       </section>
       <section class="space"></section>
-      <section class="date-and-time">
+    </main>
+    <section class="date-and-time">
         <div class='categories'>
           <p>Dates</p>
           <p style="padding-left: 45px">Start Time</p>
           <p>End Time</p>
         </div>
-      <p class="days"></p>
+        <p class="days"></p>
 
 
       </section>
@@ -85,14 +85,17 @@
       <form method="POST" action="/events/:id">
         <input type="submit" class="see-event" value="go to event">
       </form>
-    </div>
   </div>
-    </main>
-  </form>
-
-  <footer> <% include ./_partials/_footer %> </footer>
-
+  </div>
+  <footer id="footer" >
+ <div class="container">
+  <div class=”row bottom-rule”>
+    <p class="footerText">&#169; 2018 Nelima. All rights reserved.</p>
+  </div>
+ </div><!-- end container -->
+</footer>
   </body>
+
 
 
 
