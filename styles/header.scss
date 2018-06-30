@@ -93,10 +93,10 @@ body {
 
 .navbar-default {
   background-color: $bgDefault;
-  border-color: $bgHighlight;
+  border-color: $bgDefault;
   font-family: 'Montserrat', sans-serif;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
+  border-radius: 0px;
+
   div {
     background-color: $bgDefault;
   }

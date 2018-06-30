@@ -12,6 +12,18 @@ body {
 background-color: #e4ecf2;
 }
 
+.navbar-default {
+  border-color: #5bb0e3;
+  border-radius: 0px;
+}
+
+.container-fluid {
+  height: 120px;
+  padding-top: 20px;
+  padding-left: 35px;
+
+}
+
 
 .container {
 
@@ -26,10 +38,11 @@ background-color: #e4ecf2;
     color: red;
     width: 300px;
     height: 400px;
-    // margin-left: 50px;
-    padding-top: 70px;
+
+    padding-top: 90px;
     p {
       height: 28px;
+      margin: 15px
     }
   }
   .create-event{
@@ -123,6 +136,7 @@ background-color: #e4ecf2;
     margin: auto;
     padding-left: 50px;
     padding-right: 50px;
+    padding-top: 10px;
     .categories{
       font-weight: bold;
       display: flex;
