@@ -13,17 +13,32 @@ $custom-font: 'Montserrat', sans-serif;
 
 
 body {
+
   margin-top: 50px;
   text-align: center;
   background-color: $backgroud-color-light;
   color: $text-color;
   font-family: $custom-font;
-
-  h2 i {
-    padding-left: 10px;
-    color: $accent-bright-blue;
+  .nav-bar {
+    height: 120px;
+    padding-top: 20px;
+    background-color: #5bb0e3;
   }
-
+  h1 {
+    font-weight: normal;
+  }
+  h2 {
+    font-weight: normal;
+    padding-left: 10px;
+    color: #000000;
+  }
+  h2 i {
+    color: #5bb0e3;
+    margin-left: 10px;
+  }
+  h3 {
+    font-weight: normal;
+  }
 
   table {
       margin: auto;
@@ -59,7 +74,14 @@ body {
          border-bottom: none;
 
          .btn-choice {
-           border-radius: 10px;
+          background-color: #323947;
+          color: #f6e474;
+          border-radius: 5px;
+         }
+         .btn-choice:hover {
+          background-color: #f6e474;
+          color: #323947;
+          border: 1px solid #323947;
          }
        }
 
@@ -73,11 +95,14 @@ body {
           .date {
             word-wrap: break-word;
           }
+
         }
 
         tbody + tbody {
           border-top: 2px solid $table-grey;
         }
+
+
 
         .check{
           color: $check-color;
@@ -95,6 +120,15 @@ body {
       }
 
 
-
+      #vote {
+        background-color: #323947;
+        color: #f6e474;
+        border-radius: 5px;
+      }
+      #vote:hover {
+        background-color: #f6e474;
+        color: #323947;
+        border: 1px solid #323947;
+      }
 
 }

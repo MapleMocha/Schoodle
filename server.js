@@ -80,7 +80,7 @@ app.get("/events/:id", (req, res) => {
        // currentUser: '',
        // eventId: '',
        // eventId: req.body.eventId,
-       // userObject: req.session.user_id,
+       userObject: req.session.user_id,
 
      };
    let currEvent;

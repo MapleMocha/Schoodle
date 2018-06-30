@@ -20,10 +20,8 @@
 
   </head>
   <body>
-    <!--nav bar -->
-    <nav>
-      <span class='header'>Schoodle</span>
-    </nav>
+    <header class="nav-bar"> <% include ./_partials/_header %> </header>
+
 
     <h1>Invite your voters with this link extension: </h1>
     <div>
@@ -71,7 +69,7 @@
                 <tr class='new-user'>
                   <td class='name'>
                       <input class='usernameInput' type='username' placeholder='Your name'/>
-                      <input class='emailInput'type='email' placeholder='myEmail@Nielemma.com'/>
+                      <input class='emailInput'type='email' placeholder='Your email'/>
                   </td>
 
                   <% for(let i = 0; i < columnCount; i++) { %>
@@ -95,6 +93,6 @@
             <%#  for"submited" <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
             <td class='ex'><i class="far fa-times-circle fa-2x"></i></td> %>
 
-
+    <footer> <% include ./_partials/_footer %> </footer>
   </body>
 </html>
