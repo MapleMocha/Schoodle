@@ -69,9 +69,9 @@
                   </td>
 
                   <% for(let i = 0; i < columnCount; i++) { %>
-                        <td>
+                        <td class='choiceRow'>
                           <p class='ids'><%-allDateOptionIds[i]%></p>
-                          <button class='btn-choice'>choose</button>
+                          <button class='btn-choice exer'>choose</button>
                         </td>
                    <% }  %>
 
@@ -80,14 +80,9 @@
 
               </tbody>
               </table>
-              <%# <form method='POST' action='/events/:id'> %>
-                <button type='submit' id = 'vote'>Vote!</button>
-              <%# </form> %>
+                <button id ='vote'>Vote!</button>
 
             </div>
-
-            <%#  for"submited" <td class='check'><i class="fas fa-check-circle fa-2x"></i></td>
-            <td class='ex'><i class="far fa-times-circle fa-2x"></i></td> %>
 
     <footer> <% include ./_partials/_footer %> </footer>
   </body>
