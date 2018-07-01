@@ -204,15 +204,17 @@ app.post('/events/:id', (req, res) => {
 
                    newId = id[0];
                    var extra = [];
+                   if(currDateOptionsIds.length > 0){
 
                    for(let i = 0; i < currDateOptionsIds.length; i++){
 
-                     extra.push(knex('usersDateOptions').insert({
-                                                            dateOptionsId: Number(currDateOptionsIds[i]),
-                                                            usersId:newId
-                                                          }));
+                       extra.push(knex('usersDateOptions').insert({
+                                                              dateOptionsId: Number(currDateOptionsIds[i]),
+                                                              usersId:newId
+                                                            }));
 
 
+                      }
                     }
                     return Promise.all(extra);
                   })
@@ -220,6 +222,7 @@ app.post('/events/:id', (req, res) => {
 
 app.post('/events/:id/edit', (req, res) => {
   console.log('email: ', req.body.email, ' username: ', req.body.name)
+  let foundId;
 
   knex('users').where({
                   'email': req.body.email,
@@ -227,20 +230,42 @@ app.post('/events/:id/edit', (req, res) => {
                 })
                .returning('id')
                .then(function(id){
+                 foundId = id[0].id
                  knex('usersDateOptions').where('usersId', id[0].id)
-                                         .del()
-                                         .then(function(){
-
-                                         })
+                                          .count('*')
+                                          .then(function(result){
+                                            console.log('result: ',result[0].count)
+                                            if(result[0].count > 0){
+                                              knex('usersDateOptions').where('usersId', foundId)
+                                                                      .del()
+                                                                      .then(function(){
+                                                                        console.log('DELETED OPTIONS')
+                                                                        knex('users').where('email', req.body.email)
+                                                                                     .del()
+                                                                                     .then(function(){
+                                                                                         console.log('DELETED USER')
+                                                                                     })
+                                                                      })
+                                            } else {
+                                              knex('users').where('email', req.body.email)
+                                                           .del()
+                                                           .then(function(){
+                                                               console.log('DELETED USER')
+                                                           })
+                                            }
+                                          })
                })
                .then(function() {
-                    knex('users').where('email', req.body.email)
-                                 .del()
-                                 .then(function(){
-
-                                 })
-
+                 console.log('DONE ALL')
                })
+               // .then(function() {
+               //      knex('users').where('email', req.body.email)
+               //                   .del()
+               //                   .then(function(){
+               //
+               //                   })
+               //
+               // })
 
 })
 
