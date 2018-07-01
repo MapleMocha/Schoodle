@@ -7,6 +7,18 @@ $(document).ready(function() {
     $newMessage.appendTo($('.warningMessage')).fadeOut(4500);
   }
 
+  //helper function to copy invite link to clipboard
+  function copyLink(toCopy) {
+    const newElement = document.createElement('textarea');
+
+    newElement.value = toCopy;
+    document.body.appendChild(newElement);
+
+    newElement.select();
+    document.execCommand('copy');
+    document.body.removeChild(newElement);
+  };
+
 
   const $submitChoices = $('#vote')
   let clicked = false;
@@ -169,5 +181,11 @@ $(document).ready(function() {
     }
 
   });
+
+  $('.far.fa-copy').on('click', (event) => {
+    const link = $('#invite-link').val()
+    copyLink(link);
+  });
+
 
 });

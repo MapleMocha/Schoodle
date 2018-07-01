@@ -21,7 +21,8 @@
 
     <h1>Invite your voters with this link extension: </h1>
     <div>
-      <h2 id='invite-link'>http://localhost:8080/event/<%-uniqueUrl%><i class="far fa-copy"></i><h2>
+      <h2>http://localhost:8080/event/<%-uniqueUrl%><i class="far fa-copy"></i><h2>
+        <input id='invite-link' class='ids' type='textarea' value=<%-`http://localhost:8080/event/${uniqueUrl}`%> />
       <!-- image to click to autocopy -->
 
       <h3 class='ids'><%-`${eventId}`%></h3>
