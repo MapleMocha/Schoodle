@@ -39,7 +39,7 @@ $(document).ready(function() {
           onSelect: function (dateText, inst) {
               addOrRemoveDate(dateText);
               appendNewRow();
-              dates = [];
+              console.log(dates);
           },
           beforeShowDay: function (date) {
               var year = date.getFullYear();
@@ -64,9 +64,13 @@ $(document).ready(function() {
 
   // appends new date row to Dates/Times section on Create page
   function appendNewRow() {
-    $('.days').append(`<div class='new-div'><p class='dates-list'>${dates}</p><input type='text' autocomplete='off' class='start' name='start' style='width: 80px; margin-bottom: 5px'><input type='text' class='end' autocomplete='off' name='end' style='width: 80px; margin-bottom: 5px'><button class='delete'>delete</button></div>`);
-    addStart();
-    addEnd();
+    for (var i = 0; i < dates.length; i++) {
+      if (i === dates.length - 1) {
+        $('.days').append(`<div class='new-div'><p class='dates-list'><input name='days' style='width: 80px; margin-top:5px; background-color: #fffadb; border: none;' value='${dates[i]}' readonly ></p><input type='text' autocomplete='off' class='start' name='start' style='width: 80px; margin-bottom: 5px'><input type='text' class='end' autocomplete='off' name='end' style='width: 80px; margin-bottom: 5px'><button class='delete'>delete</button></div>`);
+        addStart();
+        addEnd();
+      }
+    }
     $('.delete').on('click', function (event){
       $(event.target).parent().remove();
     })

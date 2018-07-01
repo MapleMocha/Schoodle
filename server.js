@@ -375,7 +375,8 @@ app.post("/events", (req, res) => {
   let existingAdminID;
   knex.select('id').from('admin').where('id', req.session.user_id).then(function(result) {
     existingAdminID = result[0].id;
-    let {name, email, title, description, day, start, end} = req.body;
+    let {name, email, title, description, days, start, end} = req.body;
+    console.log(days);
     Promise.all([
           knex('event')
             .insert({name: title, adminId: existingAdminID, description: description, uniqueURL:uniqueUrl})
@@ -391,7 +392,7 @@ app.post("/events", (req, res) => {
               else {
               for (var i = 0; i < start.length; i++) {
                 knex('date_options')
-                  .insert({date: day, timeStart: `${day} ${start[i]}:00`, timeEnd: `${day} ${end[i]}:00`, eventId: id[0]})
+                  .insert({date: days[i], timeStart: `${days[i]} ${start[i]}:00`, timeEnd: `${days[i]} ${end[i]}:00`, eventId: id[0]})
                   .then(function() {
                     console.log(req.body);
                   });
