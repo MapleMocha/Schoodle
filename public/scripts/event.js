@@ -4,7 +4,7 @@ $(document).ready(function() {
   //helper function to create warning message if username and email not submitted properly
   function warning(message) {
     const $newMessage = $(`<p class='warning'>${message}</p>`)
-    $newMessage.appendTo($('.warningMessage')).fadeOut(4500);
+    $newMessage.appendTo($('.warningMessage')).fadeOut(5000);
   }
 
   //helper function to copy invite link to clipboard
@@ -20,9 +20,7 @@ $(document).ready(function() {
   };
 
 
-  const $submitChoices = $('#vote')
   let clicked = false;
-  // const $rowToSubmit = $('.new-user .name')
   let chosen = [];
   let email;
   let username;
@@ -64,8 +62,6 @@ $(document).ready(function() {
           }
 
           submitChoice();
-
-
 
           let newUser = {
             name: username,
@@ -124,9 +120,6 @@ $(document).ready(function() {
 
       chosen = []
 
-
-
-
       $inputFields.replaceWith(`<td class='name'>
           <form>
             <input class='usernameInput' type='username' value='${username}'/>
@@ -163,15 +156,11 @@ $(document).ready(function() {
                 .removeClass('check')
                 .addClass('exer btn-choice')
                 .append('choose');
-      // let i = chosen.indexOf($dateId.html());
-      //     if(i != -1) {
-      //     	chosen.splice(i, 1);
-      //     }
+
       let $dateId = $tableSpot.siblings().removeClass('.chosen')
 
     } else {
       $tableSpot.empty()
-                // .removeClass('ex')
                 .removeClass('exer')
                 .addClass('check btn-choice')
                 .append($check);
