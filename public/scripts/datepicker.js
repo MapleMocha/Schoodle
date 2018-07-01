@@ -4,20 +4,20 @@ $(document).ready(function() {
   let dates = [];
 
   function addDate(date) {
-      // if ($.inArray(date, dates) < 0)
+      if ($.inArray(date, dates) < 0)
           dates.push(date);
   }
 
-  // function removeDate(index) {
-  //     dates.splice(index, 1);
-  // }
+  function removeDate(index) {
+      dates.splice(index, 1);
+  }
 
   // Adds a date if we don't have it yet, else remove it
   function addOrRemoveDate(date) {
-      // var index = $.inArray(date, dates);
-      // if (index >= 0)
-      //     removeDate(index);
-      // else
+      var index = $.inArray(date, dates);
+      if (index >= 0)
+          removeDate(index);
+      else
           addDate(date);
 
   }
@@ -65,7 +65,7 @@ $(document).ready(function() {
 
   // appends new date row to Dates/Times section on Create page
   function appendNewRow() {
-
+    console.log(dates);
     for (var i = 0; i < dates.length; i++) {
       if (i === dates.length - 1) {
         $('.days').append(`<div class='new-div'><p class='dates-list'>${dates[i]}</p><input type='text' autocomplete='off' class='start' name='start' style='width: 80px; margin-bottom: 5px'><input type='text' class='end' autocomplete='off' name='end' style='width: 80px; margin-bottom: 5px'><button class='delete'>delete</button></div>`);
@@ -79,9 +79,8 @@ $(document).ready(function() {
   }
 
   // $('.button').on('submit', function (event) {
-
   //   $('.daysArray').append(`<div>${dates}</div>`);
-  //   console.log(dates['0']);
+  //   console.log();
   // })
 
   // adds start time text box
