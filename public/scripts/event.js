@@ -10,10 +10,11 @@ $(document).ready(function() {
 
   const $submitChoices = $('#vote')
   let clicked = false;
-  const $rowToSubmit = $('.new-user .name')
+  // const $rowToSubmit = $('.new-user .name')
   let chosen = [];
   let email;
   let username;
+  let $buttonChoice = $('.btn-choice');
 
   $('#vote').on('click', (event) => {
 
@@ -25,23 +26,31 @@ $(document).ready(function() {
 
       if(username && email){
 
+          $('#vote').html('Edit Choice')
           clicked = true;
 
           const submitChoice = function(){
+
+            let $rowToSubmit = $('.new-user .name')
             let $usernameSubmission = $(`<td class='user-column new-name'>${username}</td><p class='new-email'>${email}</p>`)
 
             $rowToSubmit.replaceWith($usernameSubmission);
 
             let $yesBlocks = $('.new-user .check')
             $yesBlocks.parent().addClass('check')
-            // $yesBlocks.siblings().addClass('chosen')
-            // chosen = $('.chosen').toArray();
-            $yesBlocks.replaceWith(`<i class="fas fa-check-circle fa-2x"></i>`)
+                               .append(`<i class="fas fa-check-circle fa-2x"></i>`)
 
-            let $noBlocks = $('.new-user .btn-choice')
+
+            let $noBlocks = $('.new-user .exer')
             $noBlocks.parent().addClass('ex')
-            $noBlocks.replaceWith(`<i class="far fa-times-circle fa-2x"></i>`)
+                              .append(`<i class="far fa-times-circle fa-2x"></i>`)
+
+            $('.btn-choice').removeClass('ex')
+                            .removeClass('check')
+                            .addClass('ids')
+                            .children().remove()
           }
+
           submitChoice();
 
 
@@ -52,7 +61,6 @@ $(document).ready(function() {
             eventId: $('h3').html(),
             dateOptionsId: chosen
           }
-
           $.ajax({
             url: '/events/:id',
             method: 'POST',
@@ -65,6 +73,7 @@ $(document).ready(function() {
             }
 
           });
+
       } else if((!email) && username){
         warning('Need to enter an email :)')
       } else if(email && (!username)){
@@ -77,10 +86,9 @@ $(document).ready(function() {
 
       clicked = false;
 
-      const $inputFields = $('.new-user .user-column')
+      $('#vote').html('Vote')
 
-      // const username = $('.new-name').html()
-      // const email = $('.new-email').html()
+      const $inputFields = $('.new-user .user-column')
 
       let delUser = {
         name: username,
@@ -98,41 +106,63 @@ $(document).ready(function() {
         },
         error: function(err){
           console.log('error: ', err)
+
         }
       });
+
+      chosen = []
+
+
 
 
       $inputFields.replaceWith(`<td class='name'>
           <form>
-            <input class='usernameInput' type='username' placeholder='${$inputFields.text()}'/>
-            <input class='emailInput'type='email' placeholder='myEmail@Nielemma.com'/>
+            <input class='usernameInput' type='username' value='${username}'/>
+            <input class='emailInput'type='email' value='${email}'/>
           </form>
         </td>`)
 
-      $potentialYes = $('.new-user .check')
-      $potentialYes.replaceWith(`<td><button class='btn-choice check'><i class="fas fa-check-circle fa-2x"></i></button></td>`)
 
-      $potentialNo = $('.new-user .ex')
-      $potentialNo.replaceWith(`<td><button class='btn-choice'>choose</button></td>`)
+      $choices = $('.choiceRow')
+      $choices.children('.fas.fa-check-circle.fa-2x').remove()
+      $choices.children('.far.fa-times-circle.fa-2x').remove()
+      if($choices.hasClass('check')){
+        $choices.children('.btn-choice').html('choose')
+      }
+      $choices.removeClass('check')
+              .removeClass('ex')
+              .addClass('choiceRow')
+      $('.chosen').addClass('check')
+      $choices.children().removeClass('.chosen')
+
+      $('.btn-choice').removeClass('ids check')
+                      .addClass('exer')
 
   }
 
   });
 
-  // let $selection = $('.btn-choice')
 
   $('.btn-choice').on('click', (event) => {
     let $check = $(`<i class="fas fa-check-circle fa-2x"></i>`)
     let $tableSpot = $(event.currentTarget);
     if ($tableSpot.hasClass('check')){
       $tableSpot.empty()
-      .addClass('btn-choice')
-      .removeClass('check')
-      .append('choose');
+                .removeClass('check')
+                .addClass('exer btn-choice')
+                .append('choose');
+      // let i = chosen.indexOf($dateId.html());
+      //     if(i != -1) {
+      //     	chosen.splice(i, 1);
+      //     }
+      let $dateId = $tableSpot.siblings().removeClass('.chosen')
+
     } else {
       $tableSpot.empty()
-      .addClass('check btn-choice')
-      .append($check);
+                // .removeClass('ex')
+                .removeClass('exer')
+                .addClass('check btn-choice')
+                .append($check);
 
       let $dateId = $tableSpot.siblings().addClass('.chosen')
       chosen.push($dateId.html());
