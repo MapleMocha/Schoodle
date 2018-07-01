@@ -56,7 +56,15 @@ $(document).ready(function() {
             $('.btn-choice').removeClass('ex')
                             .removeClass('check')
                             .addClass('ids')
+                            .children().remove()
+
+            // if(!($('.btn-choice').hasClass('.exer'))){
+            //   console.log('TEST')
+            //   $('.btn-choice').addClass('exer')
+            //                   .append('choose');
+            // }
           }
+
           submitChoice();
 
 
@@ -113,8 +121,11 @@ $(document).ready(function() {
         },
         error: function(err){
           console.log('error: ', err)
+
         }
       });
+
+
 
 
       $inputFields.replaceWith(`<td class='name'>
@@ -128,11 +139,20 @@ $(document).ready(function() {
       $choices = $('.choiceRow')
       $choices.children('.fas.fa-check-circle.fa-2x').remove()
       $choices.children('.far.fa-times-circle.fa-2x').remove()
+      if($choices.hasClass('check')){
+        $choices.children('.btn-choice').html('choose')
+      }
       $choices.removeClass('check')
               .removeClass('ex')
               .addClass('choiceRow')
+      $('.chosen').addClass('check')
+      $choices.children().removeClass('.chosen')
 
       $('.btn-choice').removeClass('ids check')
+                      .addClass('exer')
+                      // .remove('choose')
+                      // .append('choose');
+
       // $buttonChoice = $('.btn-choice');
       // .append(`<button class='btn-choice'>choose</button>`)
 
@@ -148,10 +168,13 @@ $(document).ready(function() {
     if ($tableSpot.hasClass('check')){
       $tableSpot.empty()
                 .removeClass('check')
-                .addClass('ex btn-choice')
+                .addClass('exer btn-choice')
                 .append('choose');
+      let $dateId = $tableSpot.siblings().removeClass('.chosen')
+
     } else {
       $tableSpot.empty()
+                // .removeClass('ex')
                 .removeClass('exer')
                 .addClass('check btn-choice')
                 .append($check);
