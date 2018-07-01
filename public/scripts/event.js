@@ -103,7 +103,6 @@ $(document).ready(function() {
         email: email,
         eventId: $('h3').html(),
       }
-      console.log('delUser: ', delUser)
 
       $.ajax({
         url: '/events/:id/edit',
