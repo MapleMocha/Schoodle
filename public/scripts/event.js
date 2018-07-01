@@ -7,17 +7,32 @@ $(document).ready(function() {
     $newMessage.appendTo($('.warningMessage')).fadeOut(5000);
   }
 
-  //helper function to copy invite link to clipboard
-  function copyLink(toCopy) {
-    const newElement = document.createElement('textarea');
+  console.log($('#isLoggedIn').html())
 
-    newElement.value = toCopy;
-    document.body.appendChild(newElement);
+  if($('#isLoggedIn').html() === 'true') {
+    //helper function to copy invite link to clipboard
+    function copyLink(toCopy) {
+      const newElement = document.createElement('textarea');
 
-    newElement.select();
-    document.execCommand('copy');
-    document.body.removeChild(newElement);
-  };
+      newElement.value = toCopy;
+      document.body.appendChild(newElement);
+
+      newElement.select();
+      document.execCommand('copy');
+      document.body.removeChild(newElement);
+    };
+
+      const uniqueUrl = window.location;
+
+      $('.jumbotron').append(`<br />
+                              <h4>Invite attendees with this link extension:</h4>
+                              <h4>${uniqueUrl}   <i class="far fa-copy"></i><h4>`)
+
+      $('.far.fa-copy').on('click', (event) => {
+        copyLink(uniqueUrl);
+      });
+
+  }
 
 
   let clicked = false;
@@ -66,7 +81,7 @@ $(document).ready(function() {
           let newUser = {
             name: username,
             email: email,
-            eventId: $('h3').html(),
+            eventId: $('#eventId').html(),
             dateOptionsId: chosen
           }
           $.ajax({
@@ -101,7 +116,7 @@ $(document).ready(function() {
       let delUser = {
         name: username,
         email: email,
-        eventId: $('h3').html(),
+        eventId: $('#eventId').html(),
       }
 
       $.ajax({
@@ -168,11 +183,6 @@ $(document).ready(function() {
       chosen.push($dateId.html());
     }
 
-  });
-
-  $('.far.fa-copy').on('click', (event) => {
-    const link = $('#invite-link').val()
-    copyLink(link);
   });
 
 
