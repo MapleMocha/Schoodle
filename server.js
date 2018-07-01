@@ -221,7 +221,6 @@ app.post('/events/:id', (req, res) => {
 });
 
 app.post('/events/:id/edit', (req, res) => {
-  console.log('email: ', req.body.email, ' username: ', req.body.name)
   let foundId;
 
   knex('users').where({
@@ -234,38 +233,25 @@ app.post('/events/:id/edit', (req, res) => {
                  knex('usersDateOptions').where('usersId', id[0].id)
                                           .count('*')
                                           .then(function(result){
-                                            console.log('result: ',result[0].count)
                                             if(result[0].count > 0){
                                               knex('usersDateOptions').where('usersId', foundId)
                                                                       .del()
                                                                       .then(function(){
-                                                                        console.log('DELETED OPTIONS')
                                                                         knex('users').where('email', req.body.email)
                                                                                      .del()
                                                                                      .then(function(){
-                                                                                         console.log('DELETED USER')
                                                                                      })
                                                                       })
                                             } else {
-                                              knex('users').where('email', req.body.email)
+                                                knex('users').where('email', req.body.email)
                                                            .del()
                                                            .then(function(){
-                                                               console.log('DELETED USER')
                                                            })
                                             }
                                           })
                })
                .then(function() {
-                 console.log('DONE ALL')
                })
-               // .then(function() {
-               //      knex('users').where('email', req.body.email)
-               //                   .del()
-               //                   .then(function(){
-               //
-               //                   })
-               //
-               // })
 
 })
 
