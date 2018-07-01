@@ -264,7 +264,7 @@ app.post("/logout", (req,res) => {
 // Logs in the User
 app.post("/login", (req, res) => {
 
-  const emailSubmitted = req.body.email;
+  const emailSubmitted = req.body.email.toLowerCase();
   const passwordSubmitted = req.body.password;
 
   // Checks if the credentials match an email and password in the database.
@@ -296,7 +296,8 @@ app.post("/login", (req, res) => {
 app.post("/register", (req, res) => {
 
   const fullNameSubmitted = req.body.name;
-  const emailSubmitted = req.body.email;
+  const emailSubmitted = req.body.email.toLowerCase();
+  console.log(emailSubmitted);
 
     // Makes sure all fields are filled
     if (fullNameSubmitted  === '' || emailSubmitted === '' || req.body.password === '') {

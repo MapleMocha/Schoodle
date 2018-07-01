@@ -1,11 +1,13 @@
 $(document).ready(function() {
 
+let errorMessage = "Invalid credentials";
+
 $('.loginAlert').on("submit", function(event) {
   $(".login-alert").text("");
 
   if ($('.login').val().length === 0) {
     event.preventDefault();
-    $(".login-alert").append("Invalid credentials")
+    $(".login-alert").append(errorMessage)
   }
 });
 
@@ -45,6 +47,8 @@ const $close = $('.close');
 $close.on('click', function () {
   $('.bg-modal-login').css({display: 'none'});
   $('.bg-modal-signup').css({display: 'none'});
+  $(".login-alert").text("");
+  $(".register-alert").text("");
 });
 
 });
