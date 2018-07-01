@@ -65,9 +65,10 @@ $(document).ready(function() {
 
   // appends new date row to Dates/Times section on Create page
   function appendNewRow() {
+
     for (var i = 0; i < dates.length; i++) {
       if (i === dates.length - 1) {
-        $('.days').append(`<div class='new-div'><p class='dates-list'>${dates}</p><input type='text' autocomplete='off' class='start' name='start' style='width: 80px; margin-bottom: 5px'><input type='text' class='end' autocomplete='off' name='end' style='width: 80px; margin-bottom: 5px'><button class='delete'>delete</button></div>`);
+        $('.days').append(`<div class='new-div'><p class='dates-list'>${dates[i]}</p><input type='text' autocomplete='off' class='start' name='start' style='width: 80px; margin-bottom: 5px'><input type='text' class='end' autocomplete='off' name='end' style='width: 80px; margin-bottom: 5px'><button class='delete'>delete</button></div>`);
         addStart();
         addEnd();
       }
@@ -78,7 +79,8 @@ $(document).ready(function() {
   }
 
   // $('.button').on('submit', function (event) {
-  //   $('.daysArray').append(`<input name="dateArray">${dates}</input>`);
+
+  //   $('.daysArray').append(`<div>${dates}</div>`);
   //   console.log(dates['0']);
   // })
 
