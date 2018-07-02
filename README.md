@@ -8,7 +8,7 @@ Developped by Emma Skillings, Eliza Moore and Nicholas Lepage
 
 ![alt text](https://github.com/NicholasLepage/Schoodle/blob/master/public/resources/LandingPageLoggedIn.png)
 ![alt text](https://github.com/NicholasLepage/Schoodle/blob/master/public/resources/CreateEvent.png)
-![alt text](https://github.com/NicholasLepage/Schoodle/blob/master/public/resources/UserVote.png)
+![alt text](https://github.com/NicholasLepage/Schoodle/blob/master/public/resources/newUserVote.png)
 
 ## Getting Started
 
