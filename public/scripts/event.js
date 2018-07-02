@@ -7,6 +7,8 @@ $(document).ready(function() {
     $newMessage.appendTo($('.warningMessage')).fadeOut(5000);
   }
 
+  console.log($('#isLoggedIn').html())
+
   //helper function to copy invite link to clipboard
   function copyLink(toCopy) {
     const newElement = document.createElement('textarea');
@@ -18,6 +20,33 @@ $(document).ready(function() {
     document.execCommand('copy');
     document.body.removeChild(newElement);
   };
+  if($('#isLoggedIn').html() === 'true') {
+
+      const uniqueUrl = window.location;
+
+      $('.jumbotron').append(`<br />
+                              <h4>Invite attendees with this link extension:</h4>
+                              <h4>${uniqueUrl}   <i class="far fa-copy"></i><h4>
+
+                              <form  class='emailTheLink' method='POST' action="mailto:?&body=Hey!%20Youve%20been%20invited%20to%20submit%20youre%20availability%20for%3A%20${$('.eventDescript').html()}%0D%0A${$('.adminName').html()}%0D%0A%0D%0AFollow%20the%20link%20below%3A%20%0D%0A${uniqueUrl}">
+                                <button type='submit'>Email The Link!</button><h4>
+                              </form>
+
+                              <div class="fb-share-button" data-href="https://www.buzzfeed.com/quizzes" data-layout="button" data-size="large" data-mobile-iframe="false"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2Fevents%2Fj99nsgu06ko&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+
+                              `)
+
+      // $('.jumbotron').children('form').removeClass('emailTheLink')
+      // $('.jumbotron').children('form').removeClass('emailTheLink')
+
+      $('.far.fa-copy').on('click', (event) => {
+        copyLink(uniqueUrl);
+      });
+    // }
+
+  } else {
+    $('.jumbotron').children('form').removeClass('emailTheAdmin')
+  }
 
 
   let clicked = false;
@@ -66,7 +95,7 @@ $(document).ready(function() {
           let newUser = {
             name: username,
             email: email,
-            eventId: $('h3').html(),
+            eventId: $('#eventId').html(),
             dateOptionsId: chosen
           }
           $.ajax({
@@ -101,7 +130,7 @@ $(document).ready(function() {
       let delUser = {
         name: username,
         email: email,
-        eventId: $('h3').html(),
+        eventId: $('#eventId').html(),
       }
 
       $.ajax({
@@ -168,11 +197,6 @@ $(document).ready(function() {
       chosen.push($dateId.html());
     }
 
-  });
-
-  $('.far.fa-copy').on('click', (event) => {
-    const link = $('#invite-link').val()
-    copyLink(link);
   });
 
 

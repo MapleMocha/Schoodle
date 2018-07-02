@@ -89,13 +89,20 @@ app.get("/events/:id", (req, res) => {
        userChoices: [],
        allDateOptionIds: [],
        eventDescript: [],
-       // currentUser: '',
-       // eventId: '',
-       // eventId: req.body.eventId,
-       userObject: req.session.user_id,
+       eventName: [],
+       adminName: '',
+       adminEmail: '',
+       userObject: '',
+       isLoggedIn: 'false',
 
      };
    let currEvent;
+
+   if(isLoggedIn(req)){
+     templateVars['userObject'] = req.session.user_id;
+     templateVars['isLoggedIn'] = 'true';
+   }
+
 
    knex.where({
      uniqueURL: req.params.id,
@@ -106,6 +113,16 @@ app.get("/events/:id", (req, res) => {
      currEvent = results[0].id;
      templateVars['eventId'] = currEvent;
      templateVars['eventDescript'].push(results[0].description);
+     templateVars['eventName'].push(results[0].name);
+     knex.where({
+            id: results[0].adminId,
+          })
+          .select('*')
+          .from('admin')
+          .then(function (results) {
+            templateVars['adminName'] = results[0].name
+            templateVars['adminEmail'] = results[0].email
+          })
 
     Promise.all([
 

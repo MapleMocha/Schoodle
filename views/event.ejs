@@ -12,22 +12,39 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
-
-
   </head>
   <body>
     <header class="nav-bar"> <% include ./_partials/_header %> </header>
 
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
-    <h1>Invite your voters with this link extension: </h1>
-    <div>
-      <h2>http://localhost:8080/events/<%-uniqueUrl%><i class="far fa-copy"></i><h2>
-        <input id='invite-link' class='ids' type='textarea' value=<%-`http://localhost:8080/events/${uniqueUrl}`%> />
+
+<div class="jumbotron">
+
       <!-- image to click to autocopy -->
+      <h1 class'eventName'><%-`${eventName[0]}`%></h3>
+      <h3 class='eventDescript'><%-`${eventDescript[0]}`%></h3>
 
-      <h3 class='ids'><%-`${eventId}`%></h3>
-      <h3><%-`${eventDescript[0]}`%></h3>
-    </div>
+      <p id='eventId' class='ids'><%-eventId%></p>
+      <p id='isLoggedIn' class='ids'><%-isLoggedIn%></p>
+      <br />
+      <br />
+      <h4 class='adminName'><%-`event created by: ${adminName}`%></h3>
+        <form  class='emailTheAdmin' method='POST' action=<%-`mailto:${adminEmail}`%>>
+          <button type='submit'><%-`Email ${adminName}`%></button><h4>
+        </form>
+
+
+
+
+</div>
 <br />
 <br />
 <br />
