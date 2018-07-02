@@ -9,29 +9,34 @@ $(document).ready(function() {
 
   console.log($('#isLoggedIn').html())
 
+  //helper function to copy invite link to clipboard
+  function copyLink(toCopy) {
+    const newElement = document.createElement('textarea');
+
+    newElement.value = toCopy;
+    document.body.appendChild(newElement);
+
+    newElement.select();
+    document.execCommand('copy');
+    document.body.removeChild(newElement);
+  };
   if($('#isLoggedIn').html() === 'true') {
-    //helper function to copy invite link to clipboard
-    function copyLink(toCopy) {
-      const newElement = document.createElement('textarea');
-
-      newElement.value = toCopy;
-      document.body.appendChild(newElement);
-
-      newElement.select();
-      document.execCommand('copy');
-      document.body.removeChild(newElement);
-    };
 
       const uniqueUrl = window.location;
 
       $('.jumbotron').append(`<br />
                               <h4>Invite attendees with this link extension:</h4>
-                              <h4>${uniqueUrl}   <i class="far fa-copy"></i><h4>`)
+                              <h4>${uniqueUrl}   <i class="far fa-copy"></i><h4><div class="fb-share-button" data-href="http://localhost:8080/events/j99nsgu06ko" data-layout="button" data-size="large" data-mobile-iframe="false"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2Fevents%2Fj99nsgu06ko&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+
+                              `)
 
       $('.far.fa-copy').on('click', (event) => {
         copyLink(uniqueUrl);
       });
+    // }
 
+  } else {
+    $('.jumbotron').children('form').removeClass('emailTheAdmin')
   }
 
 

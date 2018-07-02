@@ -35,7 +35,14 @@ body {
     i {
       color: $accent-bright-blue;
       font-size: 25px;
+      &:hover {
+        color: $accent-dark-blue;
+      }
+      &:active {
+        color: $accent-bright-blue;
+      }
     }
+
   }
 
   h1 {
@@ -135,7 +142,7 @@ body {
 
 
       #vote {
-        margin-bottom: 1em;
+        margin-bottom: 4em;
         background-color: #323947;
         color: #f6e474;
         border-radius: 5px;
@@ -155,6 +162,10 @@ body {
         color: #f6e474;
         border-radius: 5px;
         font-size: 20px;
+      }
+
+      .emailTheLink .emailTheAdmin {
+        display: none;
       }
 
 }
