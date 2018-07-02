@@ -28,7 +28,7 @@ $(document).ready(function() {
                               <h4>Invite attendees with this link extension:</h4>
                               <h4>${uniqueUrl}   <i class="far fa-copy"></i><h4>
 
-                              <form  class='emailTheLink' method='POST' action="mailto:?&body=Hey!%20Youve%20been%20invited%20to%20submit%20youre%20availability%20for%3A%20${$('.eventDescript').html()}by%3A%20${$('.adminName').html()}%0D%0A%0D%0AFollow%20the%20link%20below%3A%20%0D%0A${uniqueUrl}">
+                              <form  class='emailTheLink' method='POST' action="mailto:?&body=Hey!%20Youve%20been%20invited%20to%20submit%20youre%20availability%20for%3A%20${$('.eventDescript').html()}%0D%0A${$('.adminName').html()}%0D%0A%0D%0AFollow%20the%20link%20below%3A%20%0D%0A${uniqueUrl}">
                                 <button type='submit'>Email The Link!</button><h4>
                               </form>
 
