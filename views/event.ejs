@@ -29,14 +29,14 @@
 <div class="jumbotron">
 
       <!-- image to click to autocopy -->
-      <h1><%-`${eventName[0]}`%></h3>
-      <h3><%-`${eventDescript[0]}`%></h3>
+      <h1 class'eventName'><%-`${eventName[0]}`%></h3>
+      <h3 class='eventDescript'><%-`${eventDescript[0]}`%></h3>
 
       <p id='eventId' class='ids'><%-eventId%></p>
       <p id='isLoggedIn' class='ids'><%-isLoggedIn%></p>
       <br />
       <br />
-      <h4><%-`event created by: ${adminName}`%></h3>
+      <h4 class='adminName'><%-`event created by: ${adminName}`%></h3>
         <form  class='emailTheAdmin' method='POST' action=<%-`mailto:${adminEmail}`%>>
           <button type='submit'><%-`Email ${adminName}`%></button><h4>
         </form>
