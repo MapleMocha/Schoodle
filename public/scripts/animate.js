@@ -1,14 +1,13 @@
 $(document).ready(function() {
 
-let errorMessage = "Invalid credentials";
-
 $('.loginAlert').on("submit", function(event) {
   $(".login-alert").text("");
 
   if ($('.login').val().length === 0) {
     event.preventDefault();
-    $(".login-alert").append(errorMessage)
+    $(".login-alert").append("Invalid credentials")
   }
+
 });
 
 $('.registerAlert').on("submit", function(event) {

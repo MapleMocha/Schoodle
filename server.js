@@ -12,7 +12,7 @@ const app           = express();
 const cookieParser  = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const bcrypt        = require('bcryptjs');
-
+const flash         = require('connect-flash');
 
 const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
@@ -29,6 +29,8 @@ const usersRoutes   = require("./routes/users");
 const isLoggedIn = function(req){
   return req.session.user_id;
 }
+
+app.use(flash());
 
 app.use(morgan('dev'));
 
@@ -261,6 +263,11 @@ app.post("/logout", (req,res) => {
   res.redirect("/");
 });
 
+app.get("/error", (req, res) => {
+  let templateVars = {userObject: req.session.user_id};
+  res.render("error", templateVars);
+});
+
 // Logs in the User
 app.post("/login", (req, res) => {
 
@@ -275,12 +282,12 @@ app.post("/login", (req, res) => {
     .from('admin')
     .then(function(result){
       if (result == false) {
-        res.sendStatus(400);
+        res.render("error");
       }
       bcrypt.compare(passwordSubmitted, result[0].password)
-      .then(function(resu) {
-        if (resu == false) {
-          res.sendStatus(400);
+      .then(function(passwordCheck) {
+        if (passwordCheck == false) {
+          res.render("error");
         }
 
 
@@ -297,11 +304,10 @@ app.post("/register", (req, res) => {
 
   const fullNameSubmitted = req.body.name;
   const emailSubmitted = req.body.email.toLowerCase();
-  console.log(emailSubmitted);
 
     // Makes sure all fields are filled
     if (fullNameSubmitted  === '' || emailSubmitted === '' || req.body.password === '') {
-      res.sendStatus(400);
+      res.render("error");
     } else {
 
   // Stores the new hashed password in a variable
@@ -326,7 +332,7 @@ app.post("/register", (req, res) => {
 
           });
       } else {
-        res.sendStatus(400);
+        res.render("error");
       }
     });
   }

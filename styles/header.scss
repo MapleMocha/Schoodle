@@ -49,6 +49,8 @@ body {
   padding-left: 10px;
 }
 .login-alert, .register-alert {
+  margin-top: -25px;
+  margin-bottom: -10px;
   height: 28px;
   color: red;
 }
@@ -105,7 +107,20 @@ body {
     background-color: #5bb0e3;
   }
 }
-
+.errorDiv {
+  display: flex;
+  flex-direction: column;
+  .errorPage {
+    font-size: 40px;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .errorMess {
+    margin-top: 200px;
+  }
+}
 .navbar-default {
   background-color: $bgDefault;
   border-color: $bgDefault;
