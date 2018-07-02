@@ -25,6 +25,7 @@ Developped by Emma Skillings, Eliza Moore and Nicholas Lepage
 
 - Node 5.10.x or above
 - NPM 3.8.x or above
+- bcryptjs 2.4.3 or above
 - body-parser 1.15.2 or above
 - dotenv 2.0.0 or above
 - ejs 2.4.1 or above
