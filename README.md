@@ -27,6 +27,8 @@ Developped by Emma Skillings, Eliza Moore and Nicholas Lepage
 - NPM 3.8.x or above
 - bcryptjs 2.4.3 or above
 - body-parser 1.15.2 or above
+- cookie-parser 1.4.3 or above
+- cookie-session 2.0.0 or above
 - dotenv 2.0.0 or above
 - ejs 2.4.1 or above
 - express 4.13.4 or above
@@ -35,3 +37,4 @@ Developped by Emma Skillings, Eliza Moore and Nicholas Lepage
 - morgan 1.7.0 or above
 - node-sass-middleware 0.9.8 or above
 - pg 6.0.2 or above
+- timepicker 1.11.12 or above
