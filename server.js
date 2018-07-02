@@ -12,7 +12,6 @@ const app           = express();
 const cookieParser  = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const bcrypt        = require('bcryptjs');
-const flash         = require('connect-flash');
 
 const knexConfig    = require("./knexfile");
 const knex          = require("knex")(knexConfig[ENV]);
@@ -30,7 +29,6 @@ const isLoggedIn = function(req){
   return req.session.user_id;
 }
 
-app.use(flash());
 
 app.use(morgan('dev'));
 
